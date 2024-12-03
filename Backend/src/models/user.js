@@ -3,6 +3,11 @@ const Joi = require('joi')
 
 
 const userSchema = new mongoose.Schema({
+    customId: {
+        type: String,
+        required: true,
+        unique: true
+    },
     name: {
         type: String,
         required: true,
@@ -11,10 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
-        min: 5,
-        max: 255
+        required: false,
     },
     password: {
         type: String,
@@ -25,26 +27,21 @@ const userSchema = new mongoose.Schema({
     },
     backgoundColor: {
         type: String
+    },
+    token: {
+        type: String
     }
 })
 
 
-function generateRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-
 function validateUser(user) {
     const schema = Joi.object({
+        customId: Joi.string(),
         name: Joi.string().min(3).max(100).required(),
-        email: Joi.string().min(5).max(255).required().email(),
-        password: Joi.string().min(8).max(100).required(),
-        backgoundColor: Joi.string().default(generateRandomColor())
+        email: Joi.string().email().optional(), 
+        password: Joi.string().min(5).max(100).required(),
+        backgoundColor: Joi.string(),
+        token: Joi.string(),
     })
     return schema.validate(user)
 }
