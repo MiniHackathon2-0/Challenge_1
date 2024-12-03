@@ -9,7 +9,7 @@ function loadMainContentStart() {
     let currentLandingPage = localStorage.getItem("currentLandingPage"); // beim reload gucken wo man als letztes war
     
     // rendern je nach der letzten position
-    if (currentLandingPage != null || "") {
+    if (currentLandingPage == null || currentLandingPage == '') {
         mainContainer.innerHTML = loadLogin();
     } else if (currentLandingPage == "register") {
         mainContainer.innerHTML = loadRegister();

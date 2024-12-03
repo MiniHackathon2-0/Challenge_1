@@ -7,7 +7,7 @@ async function registerUser(event){
     }
 
     try{
-        await fetch("/api/register", {
+        await fetch("http://127.0.0.1:8000/api/register", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -17,7 +17,9 @@ async function registerUser(event){
         .then(res => res.json())
         .then(data => console.log(data)); // console.log dann mit eine variable ersetzen die befüllt wird(zB userData)
 
+        clearValues();
         //weiterleittung später ergänzen, wenn die pinnwand vorhanden ist
+
     } catch(err){
         console.log('Error:', err);
     }
@@ -25,15 +27,24 @@ async function registerUser(event){
 
 
 function userDataValidation(){
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let name = document.getElementById("username").value;
+    let password = document.getElementById("passwordReg").value;
     let passwordRepeat = document.getElementById("passwordRepeat").value;
-    let userData = {username, password}
+    let userData = {name, password}
 
-    if(password != passwordRepeat && username.length >=3 && password.length >=3 && passwordRepeat.length >=3){
+    if(password != passwordRepeat && name.length >=3 && password.length >=3 && passwordRepeat.length >=3){
         alert("Please check your date.");
         return false;
     } else {
         return userData;
     }
+}
+
+function clearValues(){
+    let name = document.getElementById("username").value;
+    let password = document.getElementById("passwordReg").value;
+    let passwordRepeat = document.getElementById("passwordRepeat").value;
+    name = '';
+    password = '';
+    passwordRepeat = '';
 }
