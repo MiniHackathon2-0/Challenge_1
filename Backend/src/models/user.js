@@ -12,11 +12,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         min: 3,
-        max: 100
-    },
-    email: {
-        type: String,
-        required: false,
+        max: 100,
+        unique: true
     },
     password: {
         type: String,
@@ -25,23 +22,20 @@ const userSchema = new mongoose.Schema({
         max: 100
 
     },
-    backgoundColor: {
+    backgroundColor: {
         type: String
     },
     token: {
-        type: String
+        type: String,
+        unique: true
     }
 })
 
 
 function validateUser(user) {
     const schema = Joi.object({
-        customId: Joi.string(),
         name: Joi.string().min(3).max(100).required(),
-        email: Joi.string().email().optional(), 
         password: Joi.string().min(5).max(100).required(),
-        backgoundColor: Joi.string(),
-        token: Joi.string(),
     })
     return schema.validate(user)
 }

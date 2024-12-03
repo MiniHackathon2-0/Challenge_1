@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const authRouter = require('./routes/authentication')
+const crudRouter = require('./routes/protectedRoutes')
 const express = require('express')
 const mongoose = require('mongoose')
 const db = mongoose.connection
@@ -13,5 +14,7 @@ mongoose.set('strictQuery', true)
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 
+app.use('/auth', authRouter)
+app.use('/api', crudRouter)
+
 app.listen(PORT, () => console.log(`Server Started on port ${PORT}`))
-app.use('/api', authRouter)

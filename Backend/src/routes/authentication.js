@@ -1,8 +1,11 @@
-const { User, validate } = require('../models/user')
-const bcrypt = require('bcrypt')
-const express = require('express')
-const router = express.Router()
+require('dotenv').config();
+
+const { User, validate } = require('../models/user');
+const bcrypt = require('bcrypt');
+const express = require('express');
+const router = express.Router();
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const cors = require('cors');
 router.use(cors());
@@ -21,18 +24,18 @@ router.post('/register', async (req, res) => {
     } else {
         try {
             const salt = await bcrypt.genSalt(10)
-            const password = await bcrypt.hash(req.body.password, salt)
-            const userData = getUserData(req.body, password);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt)
+            const userData = getUserData(req.body, hashedPassword);
             console.log('created user:', userData);
 
-            await userData.save().then(() => {
-                return res.status(201).json({
-                    "id": userData.customId,
-                    "name": userData.name,
-                    "bg-color": userData.backgoundColor,
-                    "token": userData.token
-                });
-            })
+            const token = generateJWT(userData);
+
+            return res.status(201).json({
+                id: userData.customId,
+                name: userData.name,
+                backgroundColor: userData.backgroundColor,
+                token: token
+            });
 
         } catch (err) {
             return res.status(400).json({ message: err.message })
@@ -41,26 +44,30 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const { name, password } = req.body
+    const { name, password } = req.body;
 
-    const user = await User.findOne({ name: name })
+    const user = await User.findOne({ name: name });
     if (!user) {
-        return res.status(400).send('Invalid username or password')
-    }
+        return res.status(400).send('Invalid username or password');
+    };
 
-    const validPassword = await bcrypt.compare(password, user.password)
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-        return res.status(400).send('Invalid username or password')
+        return res.status(400).send('Invalid username or password');
     }
 
-    // const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    console.log(process.env.JWT_SECRET);
+
+
+    const token = generateJWT(user);
 
     res.status(200).json({
-        id: user.customId,
-        name: user.name,
-        bgColor: user.backgroundColor,
-    })
-})
+        "id": user.customId,
+        "name": user.name,
+        "backgroundColor": user.backgroundColor,
+        "jwtToken": token
+    });
+});
 
 
 
@@ -70,13 +77,13 @@ router.post('/login', async (req, res) => {
  * @param {string} password The hashed password
  * @returns {User} The new User object
  */
-function getUserData(body, password) {
+function getUserData(body, hashedPassword) {
     return new User({
         customId: generateCustomId(),
         name: body.name,
         email: body.name,
-        password: password,
-        backgoundColor: generateRandomColor(),
+        password: hashedPassword,
+        backgroundColor: generateRandomColor(),
         token: generateToken()
     })
 }
@@ -116,7 +123,18 @@ function generateRandomColor() {
  * @returns {string} A 48-byte random token in hexadecimal format
  */
 function generateToken() {
-    return require('crypto').randomBytes(48).toString('hex');
+    return crypto.randomBytes(48).toString('hex');
+}
+
+function generateJWT(user) {
+    return jwt.sign(
+        {
+            id: user.customId,
+            name: user.name
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
 }
 
 
