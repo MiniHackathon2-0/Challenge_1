@@ -7,15 +7,15 @@ const crypto = require('crypto');
 const cors = require('cors');
 router.use(cors());
 
-const registerRouter = router.post('/register', async (req, res) => {
+router.post('/register', async (req, res) => {
 
     const { error } = validate(req.body)
     if (error) {
         return res.status(400).send(error.details[0].message)
     }
 
-    let user = await User.findOne({ name: req.body.name })
-    
+    const user = await User.findOne({ name: req.body.name })
+
     if (user) {
         return res.status(400).send('User already exisits. Please sign in')
     } else {
@@ -24,19 +24,44 @@ const registerRouter = router.post('/register', async (req, res) => {
             const password = await bcrypt.hash(req.body.password, salt)
             const userData = getUserData(req.body, password);
             console.log('created user:', userData);
-            
-            await userData.save()
-            return res.status(201).json({
-                "id": userData.customId,
-                "name": userData.name,
-                "bg-color": userData.backgoundColor,
-                "token": userData.token
+
+            await userData.save().then(() => {
+                return res.status(201).json({
+                    "id": userData.customId,
+                    "name": userData.name,
+                    "bg-color": userData.backgoundColor,
+                    "token": userData.token
+                });
             })
+
         } catch (err) {
             return res.status(400).json({ message: err.message })
         }
     }
+});
+
+router.post('/login', async (req, res) => {
+    const { name, password } = req.body
+
+    const user = await User.findOne({ name: name })
+    if (!user) {
+        return res.status(400).send('Invalid username or password')
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password)
+    if (!validPassword) {
+        return res.status(400).send('Invalid username or password')
+    }
+
+    // const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+
+    res.status(200).json({
+        id: user.customId,
+        name: user.name,
+        bgColor: user.backgroundColor,
+    })
 })
+
 
 
 /**
@@ -45,7 +70,7 @@ const registerRouter = router.post('/register', async (req, res) => {
  * @param {string} password The hashed password
  * @returns {User} The new User object
  */
-function getUserData(body, password){
+function getUserData(body, password) {
     return new User({
         customId: generateCustomId(),
         name: body.name,
@@ -95,4 +120,4 @@ function generateToken() {
 }
 
 
-module.exports = registerRouter
+module.exports = router
