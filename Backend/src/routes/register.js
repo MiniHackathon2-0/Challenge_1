@@ -4,8 +4,11 @@ const express = require('express')
 const router = express.Router()
 const crypto = require('crypto');
 
+const cors = require('cors');
+router.use(cors());
 
 const registerRouter = router.post('/register', async (req, res) => {
+
     const { error } = validate(req.body)
     if (error) {
         return res.status(400).send(error.details[0].message)
@@ -19,27 +22,39 @@ const registerRouter = router.post('/register', async (req, res) => {
         try {
             const salt = await bcrypt.genSalt(10)
             const password = await bcrypt.hash(req.body.password, salt)
-            const user = new User({
-                customId: generateCustomId(),
-                name: req.body.name,
-                password: password,
-                backgoundColor: generateRandomColor(),
-                token: generateToken()
-            })
-            console.log('created user:',user);
+            const userData = getUserData(req.body, password);
+            console.log('created user:', userData);
             
-            await user.save()
+            await userData.save()
             return res.status(201).json({
-                "id": user.customId,
-                "name": user.name,
-                "bg-color": user.backgoundColor,
-                "token": user.token
+                "id": userData.customId,
+                "name": userData.name,
+                "bg-color": userData.backgoundColor,
+                "token": userData.token
             })
         } catch (err) {
             return res.status(400).json({ message: err.message })
         }
     }
 })
+
+
+/**
+ * Creates a new User object based on the given body and password.
+ * @param {Object} body The request body containing the user's name and email
+ * @param {string} password The hashed password
+ * @returns {User} The new User object
+ */
+function getUserData(body, password){
+    return new User({
+        customId: generateCustomId(),
+        name: body.name,
+        email: body.name,
+        password: password,
+        backgoundColor: generateRandomColor(),
+        token: generateToken()
+    })
+}
 
 
 /**
