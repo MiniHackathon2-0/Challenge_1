@@ -1,7 +1,7 @@
 
 
 function loadLogin() {
-    return  ` 
+    return /*html*/ ` 
     <div class="loginArea">
             <span>Wellcome Back </span>
         
@@ -16,14 +16,14 @@ function loadLogin() {
 }
 
 function loadRegister() {
-    return `<div class="register">
+    return /*html*/ `<div class="register">
             <img onclick="loadLoginContent()" src="/Frontend/img/arrow_left.png" alt="arrow left">
             <span>Create Account</span>
-            <form id="registForm" class="registform">
-                <input class="input" type="text" placeholder="Username" required>
+            <form id="registForm" class="registform" onsubmit="return registerUser(event)" method="post">
+                <input class="input" type="text" id="username" placeholder="Username" required>
                 <input class="input" type="password" name="password" id="password" placeholder="Password" required>
                 <input class="input" type="password" name="password" id="passwordRepeat" placeholder=" Repeat Password" required>
-                <input class="btn" type="submit" value="Register">
+                <button class="btn" type="submit">Register</button>
             </form>
         </div>`;
 }
