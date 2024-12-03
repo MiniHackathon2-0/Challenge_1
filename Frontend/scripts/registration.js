@@ -1,10 +1,13 @@
-function registerUser(event){
+async function registerUser(event){
     event.preventDefault();
 
     let userData = userDataValidation();
+    if (!userData) {
+        return;
+    }
 
     try{
-        fetch("/api/register", {
+        await fetch("/api/register", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -12,14 +15,12 @@ function registerUser(event){
             body: JSON.stringify(userData)
         })
         .then(res => res.json())
-        .then(data => console.log(data));
+        .then(data => console.log(data)); // console.log dann mit eine variable ersetzen die befüllt wird(zB userData)
 
         //weiterleittung später ergänzen, wenn die pinnwand vorhanden ist
     } catch(err){
         console.log('Error:', err);
     }
-
-
 }
 
 
