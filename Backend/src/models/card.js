@@ -33,6 +33,10 @@ const cardSchema = new mongoose.Schema({
     posX: {
         type: Number,
         unique: true
+    },
+    category: {
+        type: String,
+        required: true,
     }
 })
 
@@ -46,6 +50,7 @@ function validateCard(user) {
         date: Joi.number(),
         posY: Joi.string(),
         posX: Joi.string(),
+        category: Joi.string().required()
     })
     return schema.validate(user)
 }
@@ -53,4 +58,4 @@ function validateCard(user) {
 
 const Card = mongoose.model('Card', cardSchema)
 module.exports.validate = validateCard
-module.exports.Card = Card
+module.exports = Card;

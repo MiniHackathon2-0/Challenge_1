@@ -1,23 +1,12 @@
 const authenticateToken = require('../middleware/authenticateToken');
 const router = require('express').Router();
-const getCards = require('../public/cardCRUD');
 
-router.get('/cards', authenticateToken, getCards);
+const { getCards, createCard, updateCard, deleteCard } = require('../public/cardCRUD');
 
-
-router.post('/cards', authenticateToken, (req, res) => {
-    res.send(`Hello ${req.user.name}, this is a protected route!`);    
-});
-
-
-router.put('/cards', authenticateToken, (req, res) => {
-    res.send(`Hello ${req.user.name}, this is a protected route!`);    
-});
-
-
-router.delete('/cards', authenticateToken, (req, res) => {
-    res.send(`Hello ${req.user.name}, this is a protected route!`);    
-});
+router.get('/cards/', authenticateToken, getCards);
+router.post('/cards/', authenticateToken, createCard);
+router.put('/cards/:id', authenticateToken, updateCard);
+router.delete('/cards/:id', authenticateToken, deleteCard);
 
 
 module.exports = router
