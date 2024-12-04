@@ -31,10 +31,10 @@ router.post('/register', async (req, res) => {
             const token = generateJWT(userData);
 
             const user = {
-                id: userData.customId,
-                name: userData.name,
-                backgroundColor: userData.backgroundColor,
-                token: token
+                "id": userData.customId,
+                "name": userData.name,
+                "backgroundColor": userData.backgroundColor,
+                "jwtToken": token
             };
             await userData.save();
             return res.status(201).json(user);

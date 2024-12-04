@@ -7,7 +7,8 @@ function loadMainContentStart() {
     let mainContainer = document.getElementById("mainContainer");
     mainContainer.innerHTML = "";
     let currentLandingPage = localStorage.getItem("currentLandingPage"); // beim reload gucken wo man als letztes war
-    
+    mainContainer.classList.add('container-flex');
+
     // rendern je nach der letzten position
     if (currentLandingPage == null || currentLandingPage == '') {
         mainContainer.innerHTML = loadLogin();
@@ -32,4 +33,13 @@ function loadRegisterContent() {
     mainContainer.innerHTML = "";
     localStorage.setItem("currentLandingPage", "register"); // hinterlege letzte postion
     mainContainer.innerHTML = loadRegister();
+}
+
+function loadDashboardContent() {
+    let mainContainer = document.getElementById("mainContainer");
+    mainContainer.innerHTML = "";
+    localStorage.setItem("currentLandingPage", "dashboard"); // hinterlege letzte postion
+    mainContainer.classList.remove('container-flex');
+    mainContainer.innerHTML = loadDashboard();
+    initDashboard();
 }
