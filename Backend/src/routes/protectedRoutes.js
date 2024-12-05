@@ -9,7 +9,7 @@ router.post('/cards/', authenticateToken, createCard);
 router.put('/cards/:id', authenticateToken, updateCard);
 router.delete('/cards/:id/', authenticateToken, deleteCard);
 
-router.get('/channels/', authenticateToken, getChannels);
+router.get('/channel/', authenticateToken, getChannels);
 router.post('/channel/', authenticateToken, createChannel);
 router.delete('/channel/:id/', authenticateToken, deleteChannel);
 

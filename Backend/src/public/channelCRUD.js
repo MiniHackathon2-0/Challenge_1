@@ -13,24 +13,32 @@ async function getChannels(req, res){
 };
 
 
-async function createChannel(req, res){
-    try{
-        const { creator, title, cards } = req.body;
+async function createChannel(req, res) {
+    try {
+        const { title, cards } = req.body;
         const cardsArray = cards || [];
 
-        const creatorObjectId = new mongoose.Types.ObjectId(creator.id);
+        const creatorCustomId = req.user.id;
+        console.log('creatorCustomId:', creatorCustomId);
+        console.log('req.user:', req.user);
+        
 
+
+        const creatorObjectId = new mongoose.Types.ObjectId(creatorCustomId);
+        console.log('creatorObjectId:', creatorObjectId);
+        
         const channel = await Channel.create({
-            creator: creatorObjectId,
+            creator: creatorObjectId, // Verwende jetzt die ObjectId
             title,
             cards: cardsArray
         });
+
         res.status(200).send(channel);
-    } catch (err){
-        console.error('Error creating card:', err);
+    } catch (err) {
+        console.error('Error creating channel:', err);
         res.status(400).send(err);
     }
-};
+}
 
 
 async function deleteChannel(req, res) {
@@ -43,10 +51,10 @@ async function deleteChannel(req, res) {
         }
 
         console.log('req.user:', req.user);
-        console.log('req.user.customId:', req.user._id);
-        console.log('channel.creator.toString():', channel.creator.customId);
+        console.log('req.user.customId:', req.user.customId);
+        console.log('channel.creator:', channel.creator);
 
-        if (req.user.id !== channel.creator.toString()) {
+        if (req.user.customId !== channel.creator) {
             return res.status(400).send({ error: 'You are not the creator of this channel' });
         }
 
@@ -56,14 +64,6 @@ async function deleteChannel(req, res) {
     } catch (err) {
         console.error('Error deleting channel:', err);
         res.status(400).send(err);
-    }
-}
-
-
-
-function checkCreatorID(req, res){
-    if (!mongoose.Types.ObjectId.isValid(req.body.creator)) {
-        return res.status(400).send({ error: 'Invalid creator ID' });
     }
 }
 
