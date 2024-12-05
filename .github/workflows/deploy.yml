@@ -1,0 +1,31 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      service_name:
+        description: "The name of the service to deploy"
+        required: true
+        type: string
+
+jobs:
+  update_container_setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check service name
+        run: |
+          echo "Deploying service: ${{ inputs.service_name }}"
+
+      - name: restart app setup
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.PROJECT_PATH }}
+            docker compose stop ${{ inputs.service_name }} || true
+            docker compose rm ${{ inputs.service_name }} -f || true
+            docker image prune -a -f
+            docker compose up -d ${{ inputs.service_name }}
