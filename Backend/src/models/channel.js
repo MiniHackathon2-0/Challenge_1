@@ -14,10 +14,11 @@ const channelSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    cards: {
+    cards: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Card',
-    }
+        default: []
+    }]
 })
 
 
