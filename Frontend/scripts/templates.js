@@ -43,7 +43,7 @@ function loadDashboard() {
                 
                 
             </div>
-            <button id="add-language">+</button>
+            <button id="add-language" onclick="newChannel()">+</button>
         </div>
         <div id="main">
             <h2 id="current-language">Englisch</h2>
@@ -81,4 +81,16 @@ function loadLanguage(channel) {
     return `
     <div class="language" data-language="${channel}">${channel}</div>
                 `;
+}
+
+function inputChannel() {
+
+    return`
+    <div id="input-channel" class="input-new-channel d_none"><span>New Channel</span>
+    <input id="newInput" type="text">
+    <div ><button id="save-channel" onclick="saveChannel()">Save</button> <button id="cancel-channel" onclick="cancelChannel()">Cancel</button></div>
+     </div>
+     
+    `
+    
 }

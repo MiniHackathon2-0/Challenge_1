@@ -47,7 +47,8 @@ async function loginUser(event) {
         const response = await fetch(url + "/auth/login", {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
             body: JSON.stringify(loginData)
         });
@@ -61,6 +62,8 @@ async function loginUser(event) {
 
         if (result.jwtToken) {
             localStorage.setItem("jwtToken", result.jwtToken);
+            localStorage.setItem("id", result.id);
+
             loadDashboardContent();
         }
     } catch (error) {

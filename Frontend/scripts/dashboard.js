@@ -1,23 +1,5 @@
 
-
-
-let channels= [
-    {
-        "creator": "1939745a8048c8a91fac634a759",
-        "title": "Mathematik",
-        "cards": []
-    },
-    {
-        "creator": "1939745a8048c8a91fac634a759",
-        "title": "Englisch",
-        "cards": []
-    },
-    {
-        "creator": "1939745a8048c8a91fac634a759",
-        "title": "Französisch",
-        "cards": []
-    },
-];
+let channels= [];
 
 let cards = [
     {
@@ -60,15 +42,17 @@ let cards = [
     },
 
 ];
-function initDashboard() {
-    loadTest();
-    loadData();
+async function initDashboard() {
+    
+    await loadData();
+    loadChannelsData();
+    
 };
 
 async function loadData() {
     try {
     
-        const response = await fetch(url + "/api/test", {
+        const response = await fetch(url + "/api/channel", {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -77,12 +61,15 @@ async function loadData() {
             },
            
         });
+
+        
        
         if (!response.ok) {
             throw new Error(await response.text());
         }
 
         const result = await response.json();
+        loadSubjectsArray(result);
         console.log(result);
         
     } catch (error) {
@@ -91,7 +78,93 @@ async function loadData() {
 
 }
 
-function loadTest() {   
+function loadSubjectsArray(result) {
+    channels = [];
+
+    for (let i = 0; i < result.length; i++) {
+        const element = result[i];
+        channels.push(element);        
+    }
+
+    
+}
+
+async function createChannel(channelInput) {
+
+    try {
+        let creator = {
+            "creator": localStorage.getItem("id"),
+            "title": channelInput,
+            "cards": []
+            
+        }
+            
+            const response = await fetch(url + "/api/channel", {
+                method: "Post",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+    
+                },
+               body: JSON.stringify(creator)
+            });
+        
+       
+       
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        const result = await response.json();
+        console.log(result);
+        initDashboard();
+    } catch (error) {
+        console.log(error);
+    }
+
+
+    
+}
+
+function newChannel() {
+    let inputFeld = document.getElementById("inputDivChanneloverlay");
+    inputFeld.innerHTML = inputChannel();
+    let input = document.getElementById("input-channel");
+    input.classList.remove("d_none");
+    inputFeld.classList.remove("d_none");
+    stopInputArea();
+    
+}
+function cancelChannel() {
+    let overlay = document.getElementById("inputDivChanneloverlay");
+    let inputFeld = document.getElementById("newInput");
+    let input = document.getElementById("input-channel");    
+    inputFeld.value = '';
+    input.classList.add("d_none");
+    overlay.classList.add("d_none");
+    
+}
+
+function stopInputArea() {
+    let area = document.getElementById('input-channel');
+    area.addEventListener('click', (event) => {
+        event.stopPropagation()
+    })
+}
+
+function saveChannel() {
+    let input = document.getElementById("input-channel");
+    let channel = document.getElementById("languages");
+    let inputFeld = document.getElementById("newInput");
+    let channelInput = inputFeld.value;
+    channel.innerHTML ='';
+    input.classList.add("d_none");
+    createChannel(channelInput);
+    inputFeld.value = '';
+    
+}
+
+function loadChannelsData() {   
     let language = document.getElementById("languages");
     for (let i = 0; i < channels.length; i++) {
         let channel = channels[i].title;
