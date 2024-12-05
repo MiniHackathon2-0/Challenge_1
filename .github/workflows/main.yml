@@ -1,0 +1,79 @@
+name: Update Repositories
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update_compose_setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate deployment date
+        id: date
+        run: echo "DATE=$(date +'%d%m%Y%H%M')" >> $GITHUB_ENV
+
+      - name: Rename docker-compose file with the current date
+        run: mv docker-compose.yml docker-compose-${{ env.DATE }}.yml
+
+      - name: SCP docker-compose file to the server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: docker-compose-${{ env.DATE }}.yml
+          target: /tmp/
+
+      - name: SSH into the server and deploy the main repository
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Create project directory if it doesn't exist
+            mkdir -p ${{ secrets.PROJECT_PATH }}
+              
+            # Navigate to the project directory
+            cd ${{ secrets.PROJECT_PATH }}
+
+            # Delete old docker-compose file
+            rm -f docker-compose.yml
+            mv /tmp/docker-compose-${{ env.DATE }}.yml docker-compose.yml
+
+  create_env_file:
+    runs-on: ubuntu-latest
+    needs: update_compose_setup
+
+    steps:
+      - name: create file
+        run: |
+          cat <<EOT > .env
+          DATABASE_URL=${{ vars.DATABASE_URL }}
+          PORT=${{ vars.PORT }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          JWT_EXPIRES_IN=${{ vars.JWT_EXPIRES_IN }}
+          EOT
+
+      - name: SCP .env file to the server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: .env
+          target: ${{secrets.PROJECT_PATH}}
+
+  trigger_build:
+    name: Trigger build pipe
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger build
+        uses: ./.github/workflows/build
