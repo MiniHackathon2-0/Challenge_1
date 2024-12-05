@@ -41,8 +41,9 @@ function loadDashboard() {
             <h2>Sprachen</h2>
             <div id="languages">
                 
-                <button id="add-language">+</button>
+                
             </div>
+            <button id="add-language">+</button>
         </div>
         <div id="main">
             <h2 id="current-language">Englisch</h2>

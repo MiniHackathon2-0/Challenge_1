@@ -1,5 +1,5 @@
 
-const url = "http://127.0.0.1:8080/auth";
+const url = "http://127.0.0.1:8080";
 
 async function registerUser(event) {
     event.preventDefault();
@@ -10,7 +10,7 @@ async function registerUser(event) {
     }
 
     try {
-        console.log(url + "/register");
+        console.log(url + "/auth/register");
 
         const response = await fetch(url + "/register", {
             method: "POST",
@@ -44,7 +44,7 @@ async function loginUser(event) {
     }
 
     try {
-        const response = await fetch(url + "/login", {
+        const response = await fetch(url + "/auth/login", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
