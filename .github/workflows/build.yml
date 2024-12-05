@@ -34,14 +34,11 @@ jobs:
             ghcr.io/${{ env.LOWERCASE_OWNER }}/learnify-frontend:latest
 
   trigger_deploy_fe:
-    runs-on: ubuntu-latest
+    name: Trigger deploy
     needs: build_and_push_fe
-
-    steps:
-      - name: Trigger deploy
-        uses: ./.github/workflows/deploy
-        with:
-          service_name: frontend
+    uses: ./.github/workflows/deploy.yml
+    with:
+      service_name: frontend
 
   build_and_push_be:
     runs-on: ubuntu-latest
@@ -73,11 +70,8 @@ jobs:
             ghcr.io/${{ env.LOWERCASE_OWNER }}/learnify-backend:latest
 
   trigger_deploy_be:
-    runs-on: ubuntu-latest
+    name: Trigger deploy
     needs: build_and_push_be
-
-    steps:
-      - name: Trigger deploy
-        uses: ./.github/workflows/deploy
-        with:
-          service_name: backend
+    uses: ./.github/workflows/deploy.yml
+    with:
+      service_name: backend
