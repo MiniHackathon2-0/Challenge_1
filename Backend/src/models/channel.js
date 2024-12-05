@@ -10,12 +10,12 @@ const channelSchema = new mongoose.Schema({
         max: 40,
     },
     creator: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true,
     },
     cards: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Card',
         default: []
     }]
@@ -25,8 +25,8 @@ const channelSchema = new mongoose.Schema({
 function validateChannel(user) {
     const schema = Joi.object({
         title: Joi.string().min(3).max(40).required(),
-        creator: Joi.object().required(),
-        cards: Joi.object().optional(),
+        creator: Joi.string().required(),
+        cards: Joi.string().optional(),
     })
     return schema.validate(user)
 }

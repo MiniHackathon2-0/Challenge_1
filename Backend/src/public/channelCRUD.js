@@ -19,16 +19,9 @@ async function createChannel(req, res) {
         const cardsArray = cards || [];
 
         const creatorCustomId = req.user.id;
-        console.log('creatorCustomId:', creatorCustomId);
-        console.log('req.user:', req.user);
-        
 
-
-        const creatorObjectId = new mongoose.Types.ObjectId(creatorCustomId);
-        console.log('creatorObjectId:', creatorObjectId);
-        
         const channel = await Channel.create({
-            creator: creatorObjectId, // Verwende jetzt die ObjectId
+            creator: creatorCustomId,
             title,
             cards: cardsArray
         });
@@ -50,11 +43,7 @@ async function deleteChannel(req, res) {
             return res.status(404).send({ error: 'Channel not found' });
         }
 
-        console.log('req.user:', req.user);
-        console.log('req.user.customId:', req.user.customId);
-        console.log('channel.creator:', channel.creator);
-
-        if (req.user.customId !== channel.creator) {
+        if (req.user.id !== channel.creator) {
             return res.status(400).send({ error: 'You are not the creator of this channel' });
         }
 
