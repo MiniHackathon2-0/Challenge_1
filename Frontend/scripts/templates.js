@@ -40,9 +40,7 @@ function loadDashboard() {
         <div id="sidebar">
             <h2>Sprachen</h2>
             <div id="languages">
-                <div class="language" data-language="Englisch">Englisch</div>
-                <div class="language" data-language="Deutsch">Deutsch</div>
-                <div class="language" data-language="Französisch">Französisch</div>
+                
                 <button id="add-language">+</button>
             </div>
         </div>
@@ -78,3 +76,8 @@ function loadDashboard() {
 `;
 }
 
+function loadLanguage(channel) {
+    return `
+    <div class="language" data-language="${channel}">${channel}</div>
+                `;
+}
