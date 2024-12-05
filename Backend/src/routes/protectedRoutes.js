@@ -4,6 +4,9 @@ const router = require('express').Router();
 const { getCards, createCard, updateCard, deleteCard } = require('../public/cardCRUD');
 const { getChannels, createChannel, deleteChannel } = require('../public/channelCRUD');
 
+const cors = require('cors');
+router.use(cors());
+
 router.get('/cards/', authenticateToken, getCards);
 router.post('/cards/', authenticateToken, createCard);
 router.put('/cards/:id', authenticateToken, updateCard);
