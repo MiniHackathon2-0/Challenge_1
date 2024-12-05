@@ -77,4 +77,4 @@ jobs:
 
     steps:
       - name: Trigger build
-        uses: ./build
+        uses: ./.github/workflows/build.yml
