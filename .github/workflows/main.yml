@@ -19,7 +19,7 @@ jobs:
         run: echo "DATE=$(date +'%d%m%Y%H%M')" >> $GITHUB_ENV
 
       - name: Rename docker-compose file with the current date
-        run: mv docker-compose.yml docker-compose-${{ env.DATE }}.yml
+        run: mv docker-compose-prod.yml docker-compose-${{ env.DATE }}.yml
 
       - name: SCP docker-compose file to the server
         uses: appleboy/scp-action@v0.1.7
