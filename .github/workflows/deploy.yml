@@ -7,10 +7,6 @@ on:
         description: "The name of the service to deploy"
         required: true
         type: string
-    secrets:
-      SERVER_IP:
-        description: "The server ip"
-        required: true
 
 jobs:
   update_container_setup:
