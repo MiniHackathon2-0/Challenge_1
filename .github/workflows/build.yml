@@ -39,6 +39,11 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       service_name: frontend
+    secrets:
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      USER: ${{ secrets.USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
 
   build_and_push_be:
     runs-on: ubuntu-latest
@@ -75,3 +80,8 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       service_name: backend
+    secrets:
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      USER: ${{ secrets.USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
