@@ -18,7 +18,7 @@ jobs:
           echo "Deploying service: ${{ inputs.service_name }}"
 
       - name: restart app setup
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.USER }}
