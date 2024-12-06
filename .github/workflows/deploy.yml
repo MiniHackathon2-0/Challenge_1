@@ -7,6 +7,15 @@ on:
         description: "The name of the service to deploy"
         required: true
         type: string
+    secrets:
+      SERVER_IP:
+        required: true
+      USER:
+        required: true
+      SSH_PRIVATE_KEY:
+        required: true
+      PROJECT_PATH:
+        required: true
 
 jobs:
   update_container_setup:
