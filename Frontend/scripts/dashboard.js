@@ -46,6 +46,8 @@ let cards = [
 
 ];
 async function initDashboard() {
+    userName = localStorage.getItem("username");
+    bgColor = localStorage.getItem("bgColor");
     await loadData();
     loadChannelsData();
     loadBakcgroundColorAndName();
@@ -166,7 +168,11 @@ function loadChannelsData() {
 }
 
 function loadBakcgroundColorAndName(){
-    userName = localStorage.getItem("username");
-    bgColor = localStorage.getItem("bgColor");
-    document.getElementById("bgColor").style.backgroundColor = bgColor;
+    const bgColorElement = document.getElementById("bgColor");
+    if (bgColor) {
+        bgColorElement.style.backgroundColor = bgColor;
+    }
+    if (userName) {
+        bgColorElement.innerHTML = `Hallo ${userName}`;
+    }
 }

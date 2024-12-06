@@ -1,7 +1,5 @@
-
-
 function loadLogin() {
-    return /*html*/ `
+  return /*html*/ `
     <div class="authScreen">
         <div class="loginArea">
             <span>Wellcome Back </span>
@@ -18,7 +16,7 @@ function loadLogin() {
 }
 
 function loadRegister() {
-    return /*html*/ `
+  return /*html*/ `
     <div class="authScreen">
         <div class="register" onload="clearValues()">
             <img onclick="loadLoginContent()" src="/img/arrow_left.png" alt="arrow left">
@@ -35,7 +33,7 @@ function loadRegister() {
 }
 
 function loadDashboard() {
-    return /*html*/ `
+  return /*html*/ `
     <div id="app">
         <div id="sidebar">
             <h2>Sprachen</h2>
@@ -49,7 +47,7 @@ function loadDashboard() {
             <div class="headerDiv">
                 <div>
                     <h2 id="current-language">Englisch</h2>
-                    <button id="add-card">Neuer Lernzettel</button>
+                    <button id="add-card" onclick="addNewCard()">Neuer Lernzettel</button>
                 </div>
                 <div class="whiteBackground">
                     <span id="bgColor" >Hallo ${userName}</span>
@@ -86,18 +84,36 @@ function loadDashboard() {
 
 function loadLanguage(channel) {
     return `
-    <div class="language" data-language="${channel}">${channel}</div>
-                `;
+        <div class="language" data-language="${channel}">${channel}</div>`;
 }
 
 function inputChannel() {
-
-    return`
+    return `
     <div id="input-channel" class="input-new-channel d_none"><span>New Channel</span>
-    <input id="newInput" type="text">
-    <div ><button id="save-channel" onclick="saveChannel()">Save</button> <button id="cancel-channel" onclick="cancelChannel()">Cancel</button></div>
-     </div>
-     
-    `
-    
+        <input id="newInput" type="text">
+        <div ><button id="save-channel" onclick="saveChannel()">Save</button> <button id="cancel-channel" onclick="cancelChannel()">Cancel</button></div>
+    </div>`;
+}
+
+
+function newCardHTML(){
+    return /*html*/`
+        <div class="container-backgroound" onclick="closeNewCard()">
+            <div class="card-style">
+                <form action="" onsubmit="createCard(event)">
+                    <label for="front">Question</label>
+                    <input type="text" id="front" placeholder="Front Text" required>
+                    <label for="back">Answer</label>
+                    <input type="text" id="back" placeholder="Back Text" required>
+                    <label for="color">Color</label>
+                    <input type="color" id="color" value="#ffffff">
+                    <div class="button-box">
+                        <button>Create</button>
+                        <button>Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    `;
 }
