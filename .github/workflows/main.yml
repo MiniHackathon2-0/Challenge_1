@@ -74,3 +74,8 @@ jobs:
     name: Trigger build pipe
     needs: create_env_file
     uses: ./.github/workflows/build.yml
+    secrets:
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      USER: ${{ secrets.USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
