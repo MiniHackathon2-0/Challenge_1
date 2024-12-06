@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  backend:
+    image: ghcr.io/challenge_1/learnify-backend:latest
+    container_name: express-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    env_file:
+      - .env
+
+  mongo:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  frontend:
+    image: ghcr.io/challenge_1/learnify-frontend:latest
+    container_name: nginx-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
