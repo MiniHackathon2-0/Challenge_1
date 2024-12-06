@@ -27,7 +27,7 @@ services:
     image: ghcr.io/minihackathon2-0/learnify-frontend:latest
     container_name: nginx-frontend
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - backend
     networks:
