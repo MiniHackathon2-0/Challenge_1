@@ -98,18 +98,18 @@ function inputChannel() {
 
 function newCardHTML(){
     return /*html*/`
-        <div class="container-backgroound" onclick="closeNewCard()">
+        <div class="container-backgroound">
             <div class="card-style">
-                <form action="" onsubmit="createCard(event)">
+                <form  onsubmit="return createCard(event)" method="post">
                     <label for="front">Question</label>
-                    <input type="text" id="front" placeholder="Front Text" required>
+                    <input type="text" id="front"  name="front" placeholder="Front Text" required>
                     <label for="back">Answer</label>
-                    <input type="text" id="back" placeholder="Back Text" required>
+                    <input type="text" id="back" name="back" placeholder="Back Text" required>
                     <label for="color">Color</label>
-                    <input type="color" id="color" value="#ffffff">
+                    <input type="color" id="color" name="color" value="#ffffff">
                     <div class="button-box">
-                        <button>Create</button>
-                        <button>Cancel</button>
+                        <button type="button" onclick="closeNewCard(event)">Cancel</button>
+                        <button type="submit">Create</button>
                     </div>
                 </form>
 
