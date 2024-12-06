@@ -2,6 +2,15 @@ name: Build
 
 on:
   workflow_call:
+    secrets:
+      SERVER_IP:
+        required: true
+      USER:
+        required: true
+      SSH_PRIVATE_KEY:
+        required: true
+      PROJECT_PATH:
+        required: true
 
 jobs:
   build_and_push_fe:
