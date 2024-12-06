@@ -52,6 +52,27 @@
   background-color: #1e1e2f; 
 }
 
+.headerDiv{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#bgColor{
+  padding: 8px;
+  border-radius: 12px;
+  border: none;
+  color: whitesmoke;
+  font-size: larger;
+}
+
+.whiteBackground{
+  padding: 11px 4px;
+  background-color: white;
+  border-radius: 16px;
+}
+
+
 #add-card {
   padding: 10px 15px;
   background-color: #28a745; 

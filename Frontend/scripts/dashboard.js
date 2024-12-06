@@ -1,5 +1,8 @@
 
 let channels= [];
+let userName;
+let bgColor;
+
 
 let cards = [
     {
@@ -43,27 +46,22 @@ let cards = [
 
 ];
 async function initDashboard() {
-    
     await loadData();
     loadChannelsData();
-    
+    loadBakcgroundColorAndName();
 };
+
 
 async function loadData() {
     try {
-    
         const response = await fetch(url + "/api/channel", {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
-
             },
-           
         });
 
-        
-       
         if (!response.ok) {
             throw new Error(await response.text());
         }
@@ -71,12 +69,11 @@ async function loadData() {
         const result = await response.json();
         loadSubjectsArray(result);
         console.log(result);
-        
     } catch (error) {
         console.log(error);
     }
-
 }
+
 
 function loadSubjectsArray(result) {
     channels = [];
@@ -84,33 +81,27 @@ function loadSubjectsArray(result) {
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
         channels.push(element);        
-    }
-
-    
+    } 
 }
 
-async function createChannel(channelInput) {
 
+async function createChannel(channelInput) {
     try {
         let creator = {
             "creator": localStorage.getItem("id"),
             "title": channelInput,
             "cards": []
-            
         }
             
-            const response = await fetch(url + "/api/channel", {
+            const response = await fetch(url + "/api/channel/", {
                 method: "Post",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
-    
                 },
                body: JSON.stringify(creator)
             });
-        
-       
-       
+    
         if (!response.ok) {
             throw new Error(await response.text());
         }
@@ -121,10 +112,8 @@ async function createChannel(channelInput) {
     } catch (error) {
         console.log(error);
     }
-
-
-    
 }
+
 
 function newChannel() {
     let inputFeld = document.getElementById("inputDivChanneloverlay");
@@ -135,6 +124,8 @@ function newChannel() {
     stopInputArea();
     
 }
+
+
 function cancelChannel() {
     let overlay = document.getElementById("inputDivChanneloverlay");
     let inputFeld = document.getElementById("newInput");
@@ -145,12 +136,14 @@ function cancelChannel() {
     
 }
 
+
 function stopInputArea() {
     let area = document.getElementById('input-channel');
     area.addEventListener('click', (event) => {
         event.stopPropagation()
     })
 }
+
 
 function saveChannel() {
     let input = document.getElementById("input-channel");
@@ -161,8 +154,8 @@ function saveChannel() {
     input.classList.add("d_none");
     createChannel(channelInput);
     inputFeld.value = '';
-    
 }
+
 
 function loadChannelsData() {   
     let language = document.getElementById("languages");
@@ -170,6 +163,10 @@ function loadChannelsData() {
         let channel = channels[i].title;
         language.innerHTML += loadLanguage(channel);
     }
-    
-    
+}
+
+function loadBakcgroundColorAndName(){
+    userName = localStorage.getItem("username");
+    bgColor = localStorage.getItem("bgColor");
+    document.getElementById("bgColor").style.backgroundColor = bgColor;
 }

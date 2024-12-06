@@ -46,8 +46,15 @@ function loadDashboard() {
             <button id="add-language" onclick="newChannel()">+</button>
         </div>
         <div id="main">
-            <h2 id="current-language">Englisch</h2>
-            <button id="add-card">Neuer Lernzettel</button>
+            <div class="headerDiv">
+                <div>
+                    <h2 id="current-language">Englisch</h2>
+                    <button id="add-card">Neuer Lernzettel</button>
+                </div>
+                <div class="whiteBackground">
+                    <span id="bgColor" >Hallo ${userName}</span>
+                </div>
+            </div>
             <div id="card-container" data-language="Englisch"></div>
         </div>
     </div>

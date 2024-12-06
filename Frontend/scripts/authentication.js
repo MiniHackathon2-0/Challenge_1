@@ -12,7 +12,7 @@ async function registerUser(event) {
     try {
         console.log(url + "/auth/register");
 
-        const response = await fetch(url + "/register", {
+        const response = await fetch(url + "/auth/register", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -63,6 +63,8 @@ async function loginUser(event) {
         if (result.jwtToken) {
             localStorage.setItem("jwtToken", result.jwtToken);
             localStorage.setItem("id", result.id);
+            localStorage.setItem("username", result.name);
+            localStorage.setItem("bgColor", result.backgroundColor);
 
             loadDashboardContent();
         }
