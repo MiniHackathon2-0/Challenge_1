@@ -16,7 +16,6 @@ mongoose.set('strictQuery', true)
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 
-
 app.use(cors({
     origin: 'http://127.0.0.1:5500', // Erlaube nur diese Domain (oder '*' für alle Domains)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -37,7 +36,8 @@ app.use((req, res, next) => {
     }
 
     next(); // Weiter zur nächsten Middleware/Route
-});
+
+
 
 app.use('/auth', authRouter)
 app.use('/api', crudRouter)

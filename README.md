@@ -1,11 +1,10 @@
-# Challenge_1
+# Learnify
 
 A small group project in connection with Kevin Chromik's MiniHackathon. The task was the topic of "learning". As a group, we created a digital learning wall for study groups, where every registered user can go into different subjects/groups and create learning notes (flashcards) for everyone.
 
 ## Installation
 
 - [Docker](https://docs.docker.com/get-started/get-docker/)
-- [NodeJS](https://nodejs.org/en)
 
 ## Quickstart
 
