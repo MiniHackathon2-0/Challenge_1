@@ -19,7 +19,7 @@ db.once('open', () => console.log('Connected to Database'))
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use('/auth', authRouter)
