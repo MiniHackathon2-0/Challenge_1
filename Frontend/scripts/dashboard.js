@@ -21,7 +21,6 @@ async function loadData() {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
         });
 
@@ -59,7 +58,6 @@ async function createChannel(channelInput) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
             body: JSON.stringify(creator)
         });
@@ -141,7 +139,6 @@ async function deleteChannel(i) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
 
         });
