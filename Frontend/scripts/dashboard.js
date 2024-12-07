@@ -7,6 +7,7 @@ let channelName;
 let clickCount = 0;
 
 
+
 async function initDashboard() {
     userName = localStorage.getItem("username");
     bgColor = localStorage.getItem("bgColor");
@@ -54,8 +55,8 @@ async function loadCards() {
         }
 
         const result = await response.json();
+
         loadCardsArray(result);
-        console.log(result);
     } catch (error) {
         console.log(error);
     }
@@ -76,7 +77,8 @@ function loadCardsArray(result) {
 
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
-        cards.push(element);
+        const newElement = {...element, "isFlipped": false};
+        cards.push(newElement);
     }
 }
 
@@ -333,34 +335,36 @@ function loadBakcgroundColorAndName() {
 }
 
 function flipAction(i) {
-    clickCount++; 
-console.log(clickCount);
+    if (cards[i].isFlipping) return;
+    cards[i].isFlipping = true;
+    let cardElement = cards[i].isFlipped;
 
-    if (clickCount === 1) {
+    if (!cards[i].isFlipped) {
+        console.log('start:', cards[i].isFlipped);
         stopDeletAreaCard();
         flipCard(i);
-        console.log(clickCount);
-
-    } else if (clickCount === 2) {
-        console.log(clickCount, );
-        // flipEnd(i);
-        
-        
-        clickCount = 0;
-        
+        cards[i].isFlipped = !cardElement;
+        console.log('end:', cards[i].isFlipped);
+    } else {
+        console.log('start:', cards[i].isFlipped);
+        stopDeletAreaCard();
+        flipEnd(i);
+        cards[i].isFlipped = !cardElement;
+        console.log('end:', cards[i].isFlipped);
     }
-    console.log('funktion ausgeführt');
+
+    setTimeout(() => {
+        cards[i].isFlipping = false;
+    }, 800);
 }
 
 function flipCard(i) {
-    const card = cards[i];
     let cardElement = document.getElementById('movable'+ i);       
-    cardElement.innerHTML = '';
     cardElement.classList.add('flip'); 
+    cardElement.innerHTML = '';
     flipStart(i);
-    
-
 }
+
 function flipStart(i) {
     const card = cards[i];
     let cardElement = document.getElementById('movable'+ i);
@@ -373,12 +377,12 @@ function flipEnd(i) {
     let cardElement = document.getElementById('movable'+ i);
     let cardText = document.getElementById('cardContent'+ i); 
     cardText.innerHTML='';
-    cardElement.classList.remove('flip'); 
     cardElement.classList.add('flip-reverse'); 
+    cardElement.classList.remove('flip'); 
     flipEndToStart(i);
 }
 
 function flipEndToStart(i) {
     const card = cards[i];
-      
+    loadFlipEnd(card,i);
 }

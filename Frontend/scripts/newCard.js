@@ -78,13 +78,11 @@ async function createCardFetch(card) {
 
 async function deleteCard(i) {
     const card = cards[i];    
-   await deleteCardFetch(card);
-   const cardBox = document.getElementById("card-container");
-   cardBox.innerHTML = '';
-   cards.splice(i, 1);
-   renderCards();
-   
-
+    await deleteCardFetch(card);
+    const cardBox = document.getElementById("card-container");
+    cardBox.innerHTML = '';
+    cards.splice(i, 1);
+    renderCards();
 }
 
 async function deleteCardFetch(card) {
@@ -102,7 +100,4 @@ async function deleteCardFetch(card) {
     if (!response.ok) {
         throw new Error(`HTTP-Error: ${response.status} ${response.statusText}`);
     }
-
-   
-    
 }

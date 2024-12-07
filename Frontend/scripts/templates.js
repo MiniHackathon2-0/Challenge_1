@@ -160,23 +160,15 @@ function loadCard(card,i) {
 function loadFlipCard(card,i) {
     return /*html*/`
         <div id="cardContent${i}" class="card-content" onclick="flipAction(${i})">
-        <span>${card.answer}</span>
-        <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard(${i})">Delete</button>
-        </div>
-        
-       
-        `;
-    
+            <span>${card.answer}</span>
+            <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
+        </div>`;
 }
 
 function loadFlipEnd(card,i) {
     return /*html*/`
         <div id="cardContent${i+1}" class="card-content" onclick="flipAction(${i})">
-        <span>${card.question}</span>
-        <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard(${i})">Delete</button>
-        </div>
-        
-       
-        `;
-    
+            <span>${card.question}</span>
+            <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
+        </div>`;
 }
