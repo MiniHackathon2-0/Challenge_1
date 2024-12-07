@@ -138,3 +138,14 @@ function deletArea(i) {
         </div>`;
 
 }
+
+function loadCard(card) {
+    return /*html*/`
+        <div class="card" style="background-color:${card.color}">
+        <span>${card.question}</span>
+        <button class="btn-delete"">Delete</button>
+        
+        </div>
+        `;
+    
+}

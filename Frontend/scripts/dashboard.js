@@ -36,6 +36,29 @@ async function loadData() {
     }
 }
 
+async function loadCards() {
+   const category = localStorage.getItem("curentCategory");
+    try {
+        const response = await fetch(url + "/api/cards/" + category, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        const result = await response.json();
+        loadCardsArray(result);
+        console.log(result);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 function loadSubjectsArray(result) {
     channels = [];
@@ -43,6 +66,15 @@ function loadSubjectsArray(result) {
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
         channels.push(element);
+    }
+}
+
+function loadCardsArray(result) {
+    cards = [];
+
+    for (let i = 0; i < result.length; i++) {
+        const element = result[i];
+        cards.push(element);
     }
 }
 
@@ -130,9 +162,6 @@ async function deleteChannel(i) {
     let header = document.getElementById("headerLanguageId");
     let mainContainer = document.getElementById("card-container");
     let channel = channels[i];
-
-
-
     try {
         const response = await fetch(url + "/api/channel/" + channel._id, {
             method: "Delete",
@@ -174,15 +203,31 @@ function closeDeleteChannel() {
     let overlay = document.getElementById("deletChanel");
     overlay.classList.add("d_none");
 }
-function switchLanguage(i) {
-
-
-    let header = document.getElementById("headerLanguageId");
+async function switchLanguage(i) {
+    const channel = channels[i];
+    localStorage.setItem("curentCategory", channel.title);
+    const header = document.getElementById("headerLanguageId");
     channelName = channels[i];
     console.log(channelName);
     header.innerHTML = '';
     header.innerHTML = headerLanguage(channelName);
+   await loadCards(); 
+   renderCards();  
 
+    
+}
+
+function renderCards() {
+    const cardArea = document.getElementById("card-container");
+    cardArea.innerHTML = '';
+    for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        cardArea.innerHTML += loadCard(card);
+        
+    }
+
+
+    
 }
 
 function loadBakcgroundColorAndName() {
