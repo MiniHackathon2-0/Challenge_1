@@ -138,3 +138,37 @@ function deletArea(i) {
         </div>`;
 
 }
+
+function loadCard(card,i) {
+    return /*html*/`
+        <div id="movable${i}"  onclick="flipAction(${i})" class="card" style="background-color: ${card.color};
+        left: ${card.posX}%; 
+        top: ${card.posY}%;">
+        <div id="cardContent${i}" class="card-content">
+        <span>${card.question}</span>
+        <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard(${i})">Delete</button>
+        </div>
+        
+        </div>
+        `;
+    
+}
+
+
+
+
+function loadFlipCard(card,i) {
+    return /*html*/`
+        <div id="cardContent${i}" class="card-content" onclick="flipAction(${i})">
+            <span>${card.answer}</span>
+            <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
+        </div>`;
+}
+
+function loadFlipEnd(card,i) {
+    return /*html*/`
+        <div id="cardContent${i+1}" class="card-content" onclick="flipAction(${i})">
+            <span>${card.question}</span>
+            <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
+        </div>`;
+}

@@ -36,6 +36,11 @@ const cardSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
+    },
+    flip:{
+        type: Boolean,
+        default: false
+
     }
 })
 
@@ -49,7 +54,9 @@ function validateCard(user) {
         date: Joi.number(),
         posY: Joi.string(),
         posX: Joi.string(),
-        category: Joi.string().required()
+        category: Joi.string().required(),
+        flip: Joi.boolean(),
+        
     })
     return schema.validate(user)
 }

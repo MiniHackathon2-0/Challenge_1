@@ -7,7 +7,7 @@ function addNewCard() {
 
 
 function closeNewCard(event) {
-    event.stopPropagation()
+    // event.stopPropagation();
     let cardBox = document.getElementById("cardBox");
     cardBox.classList.add("d_none");
 }
@@ -26,13 +26,16 @@ async function createCard(event) {
     try {
         const bodyData = collectData();
         const resp = await createCardFetch(bodyData);
-
+        cards.push(resp);
+        renderCards();
         console.log("Card created successfully:", resp);
         closeNewCard(event);
     } catch (error) {
         console.error("Error during card creation:", error);
         alert(error.message)
     }
+
+
 }
 
 
@@ -40,8 +43,8 @@ function collectData() {
     const QUESTION = document.getElementById("front").value;
     const ANSWER = document.getElementById("back").value;
     const COLOR = document.getElementById("color").value;
-    const POSX = Math.random();
-    const POSY = Math.random();
+    const POSX = Math.random() * 90 + 5;
+    const POSY = Math.random() * 90 + 5;
     const CATEGORY = localStorage.getItem("curentCategory") || "Unterricht";
 
 
@@ -71,4 +74,30 @@ async function createCardFetch(card) {
     }
 
     return await response.json();
+}
+
+async function deleteCard(i) {
+    const card = cards[i];    
+    await deleteCardFetch(card);
+    const cardBox = document.getElementById("card-container");
+    cardBox.innerHTML = '';
+    cards.splice(i, 1);
+    renderCards();
+}
+
+async function deleteCardFetch(card) {
+    const cardBox = document.getElementById("card-container");
+    const id = card._id;
+    const response = await fetch(`${url}/api/cards/`+ id, {
+        method: "Delete",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+        },
+        
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP-Error: ${response.status} ${response.statusText}`);
+    }
 }
