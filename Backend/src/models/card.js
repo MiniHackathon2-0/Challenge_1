@@ -15,8 +15,7 @@ const cardSchema = new mongoose.Schema({
         max: 1000,
     },
     creator: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: true,
     },
     color: {
@@ -24,14 +23,14 @@ const cardSchema = new mongoose.Schema({
     },
     date: {
         type: Number,
-        unique: true
+        unique: false
     },
     posY: {
-        type: Number,
+        type: String,
         unique: true
     },
     posX: {
-        type: Number,
+        type: String,
         unique: true
     },
     category: {
@@ -45,7 +44,7 @@ function validateCard(user) {
     const schema = Joi.object({
         question: Joi.string().min(3).max(100).required(),
         answer: Joi.string().max(1000).required(),
-        creator: Joi.string().min(5).max(100).required(),
+        creator: Joi.string().min(5).max(100),
         color: Joi.string(),
         date: Joi.number(),
         posY: Joi.string(),

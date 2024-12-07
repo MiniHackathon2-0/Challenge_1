@@ -31,10 +31,10 @@ router.post('/register', async (req, res) => {
             const token = generateJWT(userData);
 
             const user = {
-                id: userData.customId,
-                name: userData.name,
-                backgroundColor: userData.backgroundColor,
-                token: token
+                "id": userData.customId,
+                "name": userData.name,
+                "backgroundColor": userData.backgroundColor,
+                "jwtToken": token
             };
             await userData.save();
             return res.status(201).json(user);
@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
         return res.status(400).send('Invalid username or password');
     }
 
-    console.log(process.env.JWT_SECRET);
+    console.log(user);
 
 
     const token = generateJWT(user);

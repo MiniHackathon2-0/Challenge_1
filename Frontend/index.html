@@ -5,23 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
     <link rel="stylesheet" href="styles/fonts.css">
-
+    <link rel="stylesheet" href="styles/cardStyle.css">
 
     <title>Document</title>
 </head>
 
 <body onload="init()">
-    <div id="mainContainer" class="container">
+    <div id="mainContainer" class="container"></div>
 
+    <div id="inputDivChanneloverlay" class="input-channel-overlay d_none" onclick="cancelChannel()"></div>
 
-    </div>
+    <div id="cardBox" class="d_none" onclick="closeNewCard()"></div>
+    <div id="deletChanel" class="delet-chanel-area d_none" onclick="closeDeleteChannel()"></div>
 
 
 
     <script src="scripts/main.js"></script>
     <script src="scripts/templates.js"></script>
-    <script src="scripts/registration.js"></script>
+    <script src="scripts/authentication.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/newCard.js"></script>
 </body>
 
 </html>

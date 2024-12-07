@@ -1,0 +1,260 @@
+#app {
+  display: flex;
+  width: 100%;
+  height: 100dvh;
+}
+
+
+#sidebar {
+  width: 10%;
+  background-color: #2b2e43;
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#sidebar h2 {
+  margin: 0 0 10px 0;
+  color: #ffffff;
+}
+
+.language {
+  margin: 5px 0;
+  padding: 5px 10px;
+  background-color: #3a3e5c;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.language:hover {
+  background-color: #4d5275;
+}
+
+#add-language {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#add-language:hover {
+  background-color: #005bb5;
+}
+
+
+#main {
+  flex-grow: 1;
+  padding: 20px;
+  position: relative;
+  background-color: #1e1e2f;
+}
+
+.headerDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#bgColor {
+  padding: 8px;
+  border-radius: 12px;
+  border: none;
+  color: whitesmoke;
+  font-size: larger;
+}
+
+.whiteBackground {
+  padding: 12px 4px;
+  background-color: white;
+  border-radius: 16px;
+}
+
+
+#add-card {
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#add-card:hover {
+  background-color: #218838;
+}
+
+#card-container {
+  position: relative;
+  width: 100%;
+  height: calc(90% - 50px);
+  border: 1px dashed #4d5275;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.card {
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card .front,
+.card .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card .back {
+  transform: rotateY(180deg);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #2b2e43;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  color: white;
+}
+
+.modal-content input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #555a77;
+  border-radius: 5px;
+  background-color: #1e1e2f;
+  color: white;
+}
+
+.modal-content button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #005bb5;
+}
+
+.input-channel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.input-new-channel {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  top: 30%;
+  left: 30%;
+  width: 300px;
+  height: 150px;
+  border-radius: 35px;
+
+  background-color: white;
+}
+
+.d_none {
+  display: none;
+}
+
+.input-new-channel input {
+  width: 90%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #555a77;
+  border-radius: 5px;
+
+  color: black;
+}
+
+.delet-chanel-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.deletAreaError {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+  height: 150px;
+  border-radius: 35px;
+  background-color: white;
+}
+
+.delet-area{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.delet-area span{
+  text-align: center;
+}
+
+.button-box-delet{
+  display: flex;
+}
