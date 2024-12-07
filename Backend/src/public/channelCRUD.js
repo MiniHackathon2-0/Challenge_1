@@ -1,22 +1,35 @@
 const mongoose = require('mongoose');
 const Channel = require('../models/channel');
+const Card = require('../models/card');
 
-
-async function getChannels(req, res){
-    try{
+/**
+ * 
+ * get all channels
+ * 
+ * to delete the card
+ */
+async function getChannels(req, res) {
+    try {
         const channel = await Channel.find();
         res.status(200).send(channel);
-    } catch (err){
+    } catch (err) {
         console.error('Error fetching cards:', err);
         res.status(400).send(err);
     }
 };
 
-
+/**
+ * 
+ * @param {body} object of channel to create 
+    {
+    "title": "Deutsch"
+    }
+ * @returns 
+ */
 async function createChannel(req, res) {
     try {
-        const { title, cards } = req.body;
-        const cardsArray = cards || [];
+        const { title } = req.body;
+        const cardsArray = [];
 
         const creatorCustomId = req.user.id;
 
@@ -33,11 +46,18 @@ async function createChannel(req, res) {
     }
 }
 
-
+/**
+ * 
+ * @param {params.id} id of channel 
+ * 
+ * to delete the channel
+ */
 async function deleteChannel(req, res) {
     try {
         const channelId = req.params.id;
         const channel = await Channel.findById(channelId);
+        console.log(channel);
+
 
         if (!channel) {
             return res.status(404).send({ error: 'Channel not found' });
@@ -46,6 +66,8 @@ async function deleteChannel(req, res) {
         if (req.user.id !== channel.creator) {
             return res.status(400).send({ error: 'You are not the creator of this channel' });
         }
+
+        await Card.deleteMany({ category: channel.title });
 
         await Channel.deleteOne({ _id: channelId });
         res.status(200).send({ message: 'Channel deleted successfully' });

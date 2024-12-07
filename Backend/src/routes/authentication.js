@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
         return res.status(400).send('Invalid username or password');
     }
 
-    console.log(process.env.JWT_SECRET);
+    console.log(user);
 
 
     const token = generateJWT(user);
