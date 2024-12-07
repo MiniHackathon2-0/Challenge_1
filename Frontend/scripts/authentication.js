@@ -1,5 +1,5 @@
 
-const url = "http://127.0.0.1:8080";
+const url = "http://89.47.51.229:8080";
 
 async function registerUser(event) {
     event.preventDefault();

@@ -32,7 +32,7 @@ function loadRegister() {
         `;
 }
 
-function loadDashboard() {
+function loadDashboard(channelName) {
   return /*html*/ `
     <div id="app">
         <div id="sidebar">
@@ -45,9 +45,8 @@ function loadDashboard() {
         </div>
         <div id="main">
             <div class="headerDiv">
-                <div>
-                    <h2 id="current-language">Englisch</h2>
-                    <button id="add-card" onclick="addNewCard()">Neuer Lernzettel</button>
+                <div id="headerLanguageId">
+                    
                 </div>
                 <div class="whiteBackground">
                     <span id="bgColor" >Hallo ${userName}</span>
@@ -82,9 +81,17 @@ function loadDashboard() {
 `;
 }
 
-function loadLanguage(channel) {
+function headerLanguage(channel) {
+return /*html*/`
+    <h2 id="current-language">${channel.title}</h2>
+    <button id="add-card" onclick="addNewCard('')">Neuer Lernzettel</button>`;
+    
+}
+
+function loadLanguage(channel,i) {    
     return `
-        <div class="language" data-language="${channel}">${channel}</div>`;
+        <div class="language" data-language="${channel.title}" onclick="switchLanguage(${i})" 
+        ondblclick="deleteChannelOpen(${i})">${channel.title}</div>`;
 }
 
 function inputChannel() {
@@ -98,8 +105,8 @@ function inputChannel() {
 
 function newCardHTML(){
     return /*html*/`
-        <div class="container-backgroound" onclick="closeNewCard()">
-            <div class="card-style">
+        <div class="container-backgroound" ">
+            <div id="cardBoxArea" class="card-style">
                 <form action="" onsubmit="createCard(event)">
                     <label for="front">Question</label>
                     <input type="text" id="front" placeholder="Front Text" required>
@@ -116,4 +123,18 @@ function newCardHTML(){
             </div>
         </div>
     `;
+}
+
+function deletArea(i) {
+    return /*html*/`
+        <div id="deletChanelAreaStop" class="deletAreaError">
+            <div class="card-style delet-area">
+                <span>Are you sure you want to delete the channel?</span>
+                <div class="button-box-delet">    
+                    <button class="btn-confirm" onclick="deleteChannel('${i}')">Yes</button>                    
+                    <button class="btn-cancel" onclick="closeDeleteChannel()">No</button>
+                </div>
+            </div>
+        </div>`;
+
 }

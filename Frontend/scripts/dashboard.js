@@ -1,50 +1,9 @@
 
-let channels= [];
+let channels = [];
 let userName;
 let bgColor;
-
-
-let cards = [
-    {
-        "question": "Was ist ?",
-        "answer": " ist eine NoSQL-Datenbank.",
-        "creator": "643c1f5e5a4b6a2b1b7fdd29",
-        "color": "blue",
-        "date": 11234151325,
-        "posY": 1,
-        "posX": 1,
-        "category": "Datenbanken",
-        "_id": "67518861ec10698ded58b3dd",
-        "__v": 0
-    },
-
-    {
-        "question": "Was ist ?",
-        "answer": " ist eine NoSQL-Datenbank.",
-        "creator": "643c1f5e5a4b6a2b1b7fdd29",
-        "color": "blue",
-        "date": 11234151325,
-        "posY": 1,
-        "posX": 1,
-        "category": "Datenbanken",
-        "_id": "67518861ec10698ded58b3dd",
-        "__v": 0
-    },
-
-    {
-        "question": "Was ist ?",
-        "answer": " ist eine NoSQL-Datenbank.",
-        "creator": "643c1f5e5a4b6a2b1b7fdd29",
-        "color": "blue",
-        "date": 11234151325,
-        "posY": 1,
-        "posX": 1,
-        "category": "Datenbanken",
-        "_id": "67518861ec10698ded58b3dd",
-        "__v": 0
-    },
-
-];
+let cards = [];
+let channelName;
 async function initDashboard() {
     userName = localStorage.getItem("username");
     bgColor = localStorage.getItem("bgColor");
@@ -82,34 +41,30 @@ function loadSubjectsArray(result) {
 
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
-        channels.push(element);        
-    } 
+        channels.push(element);
+    }
 }
 
 
 async function createChannel(channelInput) {
     try {
-        let creator = {
-            "creator": localStorage.getItem("id"),
-            "title": channelInput,
-            "cards": []
+        let creator = {            
+            "title": channelInput,            
         }
-            
-            const response = await fetch(url + "/api/channel/", {
-                method: "Post",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
-                },
-               body: JSON.stringify(creator)
-            });
-    
+
+        const response = await fetch(url + "/api/channel/", {
+            method: "Post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+            },
+            body: JSON.stringify(creator)
+        });
+
         if (!response.ok) {
             throw new Error(await response.text());
         }
-
-        const result = await response.json();
-        console.log(result);
+        
         initDashboard();
     } catch (error) {
         console.log(error);
@@ -124,18 +79,18 @@ function newChannel() {
     input.classList.remove("d_none");
     inputFeld.classList.remove("d_none");
     stopInputArea();
-    
+
 }
 
 
 function cancelChannel() {
     let overlay = document.getElementById("inputDivChanneloverlay");
     let inputFeld = document.getElementById("newInput");
-    let input = document.getElementById("input-channel");    
+    let input = document.getElementById("input-channel");
     inputFeld.value = '';
     input.classList.add("d_none");
     overlay.classList.add("d_none");
-    
+
 }
 
 
@@ -148,26 +103,88 @@ function stopInputArea() {
 
 
 function saveChannel() {
+    let overlay = document.getElementById("inputDivChanneloverlay");
     let input = document.getElementById("input-channel");
     let channel = document.getElementById("languages");
     let inputFeld = document.getElementById("newInput");
     let channelInput = inputFeld.value;
-    channel.innerHTML ='';
+    channel.innerHTML = '';
+    overlay.classList.add("d_none");
     input.classList.add("d_none");
     createChannel(channelInput);
     inputFeld.value = '';
 }
 
 
-function loadChannelsData() {   
+function loadChannelsData() {
     let language = document.getElementById("languages");
+    language.innerHTML = '';
     for (let i = 0; i < channels.length; i++) {
-        let channel = channels[i].title;
-        language.innerHTML += loadLanguage(channel);
+        let channel = channels[i];
+        language.innerHTML += loadLanguage(channel,i);
+    }
+}
+async function deleteChannel(i) {
+    let overlay = document.getElementById("deletChanel");
+    let header = document.getElementById("headerLanguageId");
+    let mainContainer = document.getElementById("card-container");
+    let channel = channels[i];
+    
+    
+    
+    try {
+        const response = await fetch(url + "/api/channel/" + channel._id, {
+            method: "Delete",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+            },
+            
+        });
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        overlay.classList.add("d_none");
+        header.innerHTML = '';
+        mainContainer.innerHTML = '';
+        initDashboard();
+    } catch (error) {
+        console.log(error);
     }
 }
 
-function loadBakcgroundColorAndName(){
+function deleteChannelOpen(i) {
+    let overlay = document.getElementById("deletChanel");
+    overlay.classList.remove("d_none");
+    overlay.innerHTML = '';
+    overlay.innerHTML = deletArea(i);
+    stopDeletArea();
+}
+function stopDeletArea() {
+    let area = document.getElementById('deletChanelAreaStop');
+    area.addEventListener('click', (event) => {
+        event.stopPropagation()
+    })
+}
+
+function closeDeleteChannel() {
+     let overlay = document.getElementById("deletChanel");
+    overlay.classList.add("d_none");
+}
+function switchLanguage(i) {
+    
+    
+    let header = document.getElementById("headerLanguageId");
+    channelName = channels[i];
+    console.log(channelName);    
+    header.innerHTML = '';
+    header.innerHTML = headerLanguage(channelName);
+
+}
+
+function loadBakcgroundColorAndName() {
     const bgColorElement = document.getElementById("bgColor");
     if (bgColor) {
         bgColorElement.style.backgroundColor = bgColor;

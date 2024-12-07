@@ -7,21 +7,21 @@
 
 #sidebar {
   width: 10%;
-  background-color: #2b2e43; 
+  background-color: #2b2e43;
   padding: 10px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
 #sidebar h2 {
   margin: 0 0 10px 0;
-  color: #ffffff; 
+  color: #ffffff;
 }
 
 .language {
   margin: 5px 0;
   padding: 5px 10px;
-  background-color: #3a3e5c; 
-  color: #ffffff; 
+  background-color: #3a3e5c;
+  color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -33,7 +33,7 @@
 #add-language {
   margin-top: 10px;
   padding: 5px 10px;
-  background-color: #0066cc; 
+  background-color: #0066cc;
   color: white;
   border: none;
   border-radius: 5px;
@@ -49,16 +49,16 @@
   flex-grow: 1;
   padding: 20px;
   position: relative;
-  background-color: #1e1e2f; 
+  background-color: #1e1e2f;
 }
 
-.headerDiv{
+.headerDiv {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-#bgColor{
+#bgColor {
   padding: 8px;
   border-radius: 12px;
   border: none;
@@ -66,7 +66,7 @@
   font-size: larger;
 }
 
-.whiteBackground{
+.whiteBackground {
   padding: 12px 4px;
   background-color: white;
   border-radius: 16px;
@@ -75,7 +75,7 @@
 
 #add-card {
   padding: 10px 15px;
-  background-color: #28a745; 
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
@@ -83,23 +83,24 @@
 }
 
 #add-card:hover {
-  background-color: #218838; 
+  background-color: #218838;
 }
 
 #card-container {
   position: relative;
   width: 100%;
   height: calc(90% - 50px);
-  border: 1px dashed #4d5275; 
+  border: 1px dashed #4d5275;
   margin-top: 10px;
   overflow: hidden;
 }
+
 .card {
   position: absolute;
   width: 150px;
   height: 100px;
-  background-color: #ffffff; 
-  border: 1px solid #ccc; 
+  background-color: #ffffff;
+  border: 1px solid #ccc;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -107,11 +108,11 @@
   text-align: center;
   cursor: pointer;
   transform-style: preserve-3d;
-  transition: transform 0.5s; 
+  transition: transform 0.5s;
 }
 
 .card.flipped {
-  transform: rotateY(180deg); 
+  transform: rotateY(180deg);
 }
 
 .card .front,
@@ -135,7 +136,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); 
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -147,7 +148,7 @@
 }
 
 .modal-content {
-  background: #2b2e43; 
+  background: #2b2e43;
   padding: 20px;
   border-radius: 5px;
   width: 300px;
@@ -158,16 +159,16 @@
   width: 100%;
   margin-bottom: 10px;
   padding: 8px;
-  border: 1px solid #555a77; 
+  border: 1px solid #555a77;
   border-radius: 5px;
-  background-color: #1e1e2f; 
+  background-color: #1e1e2f;
   color: white;
 }
 
 .modal-content button {
   margin-right: 10px;
   padding: 5px 10px;
-  background-color: #0066cc; 
+  background-color: #0066cc;
   color: white;
   border: none;
   border-radius: 5px;
@@ -178,16 +179,16 @@
   background-color: #005bb5;
 }
 
-.input-channel-overlay{
+.input-channel-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.input-new-channel{
+.input-new-channel {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -199,20 +200,61 @@
   width: 300px;
   height: 150px;
   border-radius: 35px;
-  
+
   background-color: white;
 }
 
-.d_none{
+.d_none {
   display: none;
 }
 
-.input-new-channel input{
+.input-new-channel input {
   width: 90%;
   margin-bottom: 10px;
   padding: 8px;
-  border: 1px solid #555a77; 
+  border: 1px solid #555a77;
   border-radius: 5px;
-  
+
   color: black;
+}
+
+.delet-chanel-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.deletAreaError {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+  height: 150px;
+  border-radius: 35px;
+  background-color: white;
+}
+
+.delet-area{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.delet-area span{
+  text-align: center;
+}
+
+.button-box-delet{
+  display: flex;
 }

@@ -56,6 +56,48 @@ body{
     
 }
 
+.btn-confirm{
+    width: 100px;
+    height: 50px;
+    background-color: white;
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px white;
+    border: none;
+}
+.btn-confirm:hover{
+    background-color: grey;
+    box-shadow: 0 0 10px white;
+    border: none;
+}
+
+
+.btn-cancel{
+    width: 100px;
+    height: 50px;
+    background-color: white;
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px white;
+    border: none;
+}
+
+.btn-cancel:hover{
+    background-color: grey;
+    box-shadow: 0 0 10px white;
+    border: none;
+}
+
 .btn:hover{
     background-color: grey;
     box-shadow: 0 0 10px white;

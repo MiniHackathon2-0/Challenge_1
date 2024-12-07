@@ -40,6 +40,6 @@ function loadDashboardContent() {
     mainContainer.innerHTML = "";
     localStorage.setItem("currentLandingPage", "dashboard"); // hinterlege letzte postion
     mainContainer.classList.remove('container-flex');
-    mainContainer.innerHTML = loadDashboard();
+    mainContainer.innerHTML = loadDashboard(channelName);
     initDashboard();
 }
