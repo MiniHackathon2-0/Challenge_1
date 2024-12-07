@@ -4,6 +4,8 @@ let userName;
 let bgColor;
 let cards = [];
 let channelName;
+let clickCount = 0;
+
 
 async function initDashboard() {
     userName = localStorage.getItem("username");
@@ -37,7 +39,7 @@ async function loadData() {
 }
 
 async function loadCards() {
-   const category = localStorage.getItem("curentCategory");
+    const category = localStorage.getItem("curentCategory");
     try {
         const response = await fetch(url + "/api/cards/" + category, {
             method: "GET",
@@ -179,7 +181,8 @@ async function deleteChannel(i) {
         overlay.classList.add("d_none");
         header.innerHTML = '';
         mainContainer.innerHTML = '';
-        initDashboard();
+        channels.splice(i, 1);
+        loadChannelsData();
     } catch (error) {
         console.log(error);
     }
@@ -211,24 +214,113 @@ async function switchLanguage(i) {
     console.log(channelName);
     header.innerHTML = '';
     header.innerHTML = headerLanguage(channelName);
-   await loadCards(); 
-   renderCards();  
+    await loadCards();
+    renderCards();
 
-    
 }
 
 function renderCards() {
     const cardArea = document.getElementById("card-container");
+    if (!cardArea) {
+        console.error("Container mit ID 'card-container' nicht gefunden.");
+        return;
+    }
     cardArea.innerHTML = '';
     for (let i = 0; i < cards.length; i++) {
         const card = cards[i];
-        cardArea.innerHTML += loadCard(card);
-        
+        const cardHTML = loadCard(card, i);
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = cardHTML;
+        const newCardElement = wrapper.firstElementChild;
+        if (!newCardElement) {
+            console.error("Fehler beim Laden der Karte:", card);
+            continue;
+        }
+        makeMovable(newCardElement, i);
+        cardArea.appendChild(newCardElement);
     }
 
-
-    
 }
+function stopDeletAreaCard() {
+    let area = document.getElementById('deleteCardBtn');
+    area.addEventListener('click', (event) => {
+        event.stopPropagation()
+    })
+}
+function getMaxCoordinates(cardElement, parentElement) {
+    const parentRect = parentElement.getBoundingClientRect();
+    const cardRect = cardElement.getBoundingClientRect();
+    const maxX = 100 - (cardRect.width / parentRect.width) * 100;
+    const maxY = 100 - (cardRect.height / parentRect.height) * 100;
+    return { maxX, maxY };
+}
+
+function moveCard(e, cardElement, offsetX, offsetY, parentElement, i) {
+    const parentRect = parentElement.getBoundingClientRect();
+    let xPercent = ((e.clientX - parentRect.left - offsetX) / parentRect.width) * 100;
+    let yPercent = ((e.clientY - parentRect.top - offsetY) / parentRect.height) * 100;
+    const { maxX, maxY } = getMaxCoordinates(cardElement, parentElement);
+    xPercent = Math.max(0, Math.min(xPercent, maxX));
+    yPercent = Math.max(0, Math.min(yPercent, maxY));
+    cardElement.style.left = `${xPercent}%`;
+    cardElement.style.top = `${yPercent}%`;
+    cards[i].posX = xPercent;
+    cards[i].posY = yPercent;
+}
+
+
+function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, id, posX, posY) {
+    cardElement.style.cursor = "grab";
+    document.removeEventListener("mousemove", mouseMoveHandler);
+    document.removeEventListener("mouseup", mouseUpHandler);
+    console.log("Card moved:", id, posX, posY);
+    updateCardPosition(id, posX, posY);
+
+}
+
+
+function makeMovable(cardElement, i) {
+    let isDragging = false;
+    let offsetX = 0, offsetY = 0;
+    cardElement.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+        cardElement.style.cursor = "grabbing";
+        const parentElement = cardElement.parentElement;
+        const mouseMoveHandler = (e) => moveCard(e, cardElement, offsetX, offsetY, parentElement, i);
+        const mouseUpHandler = () => stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, cards[i]._id, cards[i].posX, cards[i].posY);
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
+    });
+}
+
+async function updateCardPosition(id, posX, posY) {
+    let creator = {
+        "posX": posX,
+        "posY": posY
+    }
+    try {
+        const response = await fetch(url + "/api/cards/" + id, {
+            method: "Put",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+            },
+            body: JSON.stringify(creator)
+        });
+
+        if (!response.ok) {
+            throw new Error("Fehler beim Speichern der Position");
+        }
+
+        console.log("Position erfolgreich gespeichert");
+    } catch (error) {
+        console.log("Fehler beim Speichern der Position:", error);
+    }
+
+}
+
 
 function loadBakcgroundColorAndName() {
     const bgColorElement = document.getElementById("bgColor");
@@ -238,4 +330,55 @@ function loadBakcgroundColorAndName() {
     if (userName) {
         bgColorElement.innerHTML = `Hallo ${userName}`;
     }
+}
+
+function flipAction(i) {
+    clickCount++; 
+console.log(clickCount);
+
+    if (clickCount === 1) {
+        stopDeletAreaCard();
+        flipCard(i);
+        console.log(clickCount);
+
+    } else if (clickCount === 2) {
+        console.log(clickCount, );
+        // flipEnd(i);
+        
+        
+        clickCount = 0;
+        
+    }
+    console.log('funktion ausgeführt');
+}
+
+function flipCard(i) {
+    const card = cards[i];
+    let cardElement = document.getElementById('movable'+ i);       
+    cardElement.innerHTML = '';
+    cardElement.classList.add('flip'); 
+    flipStart(i);
+    
+
+}
+function flipStart(i) {
+    const card = cards[i];
+    let cardElement = document.getElementById('movable'+ i);
+    cardElement.innerHTML = loadFlipCard(card, i);
+    let cardText = document.getElementById('cardContent'+ i);    
+    cardText.classList.add('flip-back');
+}
+
+function flipEnd(i) {
+    let cardElement = document.getElementById('movable'+ i);
+    let cardText = document.getElementById('cardContent'+ i); 
+    cardText.innerHTML='';
+    cardElement.classList.remove('flip'); 
+    cardElement.classList.add('flip-reverse'); 
+    flipEndToStart(i);
+}
+
+function flipEndToStart(i) {
+    const card = cards[i];
+      
 }
