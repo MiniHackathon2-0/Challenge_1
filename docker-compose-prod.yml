@@ -12,6 +12,7 @@ services:
       - app-network
     env_file:
       - .env
+    restart: on-failure
 
   mongo:
     image: mongo:6
@@ -22,6 +23,7 @@ services:
       - mongo-data:/data/db
     networks:
       - app-network
+    restart: on-failure
 
   frontend:
     image: ghcr.io/minihackathon2-0/learnify-frontend:latest
@@ -32,6 +34,7 @@ services:
       - backend
     networks:
       - app-network
+    restart: on-failure
 
 volumes:
   mongo-data:

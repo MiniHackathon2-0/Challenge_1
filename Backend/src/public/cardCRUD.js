@@ -1,36 +1,77 @@
 const mongoose = require('mongoose');
 const Card = require('../models/card');
+const validateCard = require('../models/card');
 
-async function getCards(req, res){
-    try{
-        checkCreatorID(req, res);
-
-        const cards = await Card.find();
+/**
+ * 
+ * @param {params.category} the category of cards  
+ * 
+ */
+async function getCards(req, res) {
+    try {
+        const { category } = req.params;
+        const cards = await Card.find({ category });
         res.status(200).send(cards);
-    } catch (err){
+    } catch (err) {
         console.error('Error fetching cards:', err);
         res.status(400).send(err);
     }
 };
 
-
-async function createCard(req, res){
-    try{
-        checkCreatorID(req, res);
-        console.log('req.body: ', req.body);
-        
-        const card = await Card.create(req.body);
-        res.status(200).send(card);
-    } catch (err){
+/**
+ * 
+ * @param {body} object of card to create 
+    {
+        "question": "Wer war das?",
+        "answer": " Ich",
+        "color": "blue",
+        "posY": 43,
+        "posX": 34,
+        "category": "Programmieren"
+    }
+ * @returns 
+ */
+async function createCard(req, res) {
+    const { error } = validateCard(req.body);
+    if (error) {
+        return res.status(400).send(error.details[0].message)
+    }
+    try {
+        const card = {
+            "question": req.body.question,
+            "answer": req.body.answer,
+            "creator": req.user.id,
+            "color": req.body.color,
+            "date": Date.now(),
+            "posY": req.body.posY,
+            "posX": req.body.posX,
+            "category": req.body.category
+        }
+        const result = await Card.create(card);
+        res.status(200).send(result);
+    } catch (err) {
         console.error('Error creating card:', err);
         res.status(400).send(err);
     }
 };
 
-
-async function updateCard(req, res){
-    try{
-        checkCreatorID(req, res);
+/**
+ * 
+ * @param {params.id} id of card 
+ * @param {body} object of card to update 
+    {
+        "question": "Wer war das?",
+        "answer": " Ich",
+        "color": "blue",
+        "posY": 43,
+        "posX": 34,
+        "category": "Programmieren"
+    }
+ * all of this obj is optional
+ * @returns 
+ */
+async function updateCard(req, res) {
+    try {
         const cardId = req.params.id;
         const updatedCard = await Card.findByIdAndUpdate(
             cardId,          // id der karte
@@ -42,33 +83,30 @@ async function updateCard(req, res){
             return res.status(404).send({ message: 'Card not found' });
         }
         res.status(200).send(updatedCard);
-    } catch (err){
+    } catch (err) {
         console.error('Error updating card:', err);
         res.status(400).send(err);
     }
 };
 
-
-async function deleteCard(req, res){
-    try{
-        checkCreatorID(req, res);
+/**
+ * 
+ * @param {params.id} id of card 
+ * 
+ * to delete the card
+ */
+async function deleteCard(req, res) {
+    try {
         const cardId = req.params.id;
         console.log('cardId: ', cardId);
-        
-        const card = await Card.deleteOne({ _id: cardId });
+
+        await Card.deleteOne({ _id: cardId });
         res.status(200).send({ message: 'Card deleted successfully' });
-    } catch (err){
+    } catch (err) {
         console.error('Error deleting card:', err);
         res.status(400).send(err);
     }
 };
-
-
-function checkCreatorID(req, res){
-    if (!mongoose.Types.ObjectId.isValid(req.body.creator)) {
-        return res.status(400).send({ error: 'Invalid creator ID' });
-    }
-}
 
 
 module.exports = {
