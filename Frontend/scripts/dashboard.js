@@ -4,6 +4,7 @@ let userName;
 let bgColor;
 let cards = [];
 let channelName;
+
 async function initDashboard() {
     userName = localStorage.getItem("username");
     bgColor = localStorage.getItem("bgColor");
@@ -19,7 +20,8 @@ async function loadData() {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
         });
 
@@ -48,15 +50,16 @@ function loadSubjectsArray(result) {
 
 async function createChannel(channelInput) {
     try {
-        let creator = {            
-            "title": channelInput,            
+        let creator = {
+            "title": channelInput,
         }
 
         const response = await fetch(url + "/api/channel/", {
             method: "Post",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
             body: JSON.stringify(creator)
         });
@@ -64,7 +67,7 @@ async function createChannel(channelInput) {
         if (!response.ok) {
             throw new Error(await response.text());
         }
-        
+
         initDashboard();
     } catch (error) {
         console.log(error);
@@ -121,7 +124,7 @@ function loadChannelsData() {
     language.innerHTML = '';
     for (let i = 0; i < channels.length; i++) {
         let channel = channels[i];
-        language.innerHTML += loadLanguage(channel,i);
+        language.innerHTML += loadLanguage(channel, i);
     }
 }
 async function deleteChannel(i) {
@@ -129,17 +132,18 @@ async function deleteChannel(i) {
     let header = document.getElementById("headerLanguageId");
     let mainContainer = document.getElementById("card-container");
     let channel = channels[i];
-    
-    
-    
+
+
+
     try {
         const response = await fetch(url + "/api/channel/" + channel._id, {
             method: "Delete",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+                'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
-            
+
         });
 
         if (!response.ok) {
@@ -170,15 +174,15 @@ function stopDeletArea() {
 }
 
 function closeDeleteChannel() {
-     let overlay = document.getElementById("deletChanel");
+    let overlay = document.getElementById("deletChanel");
     overlay.classList.add("d_none");
 }
 function switchLanguage(i) {
-    
-    
+
+
     let header = document.getElementById("headerLanguageId");
     channelName = channels[i];
-    console.log(channelName);    
+    console.log(channelName);
     header.innerHTML = '';
     header.innerHTML = headerLanguage(channelName);
 
