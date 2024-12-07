@@ -16,7 +16,6 @@ async function registerUser(event) {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
             body: JSON.stringify(userData)
         });
@@ -53,7 +52,6 @@ async function loginUser(event) {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
             },
             body: JSON.stringify(loginData)
         });

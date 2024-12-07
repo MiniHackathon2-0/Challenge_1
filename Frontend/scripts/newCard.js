@@ -62,7 +62,6 @@ async function createCardFetch(card) {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
-            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
         },
         body: JSON.stringify(card)
     });
