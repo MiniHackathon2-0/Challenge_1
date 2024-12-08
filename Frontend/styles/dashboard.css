@@ -273,15 +273,15 @@
  
 }
 
-.button-box{
-  margin-top: 10px;
-width: 100%;
+.button-box-Card{
+margin-top: 10px;
+width: 80%;
 height: 60px;
 display: flex;
 align-items: center;
 justify-content: space-between;
 flex-direction: row-reverse;
-align-self: flex-end;
+border-top: 1px solid #ccc;
 }
 
 .card-content{
@@ -348,8 +348,7 @@ align-self: flex-end;
   text-align: center;
 }
 
-.btn-delete{
-  
+.btn-delete{  
   width: 60px;
   height: 40px;
   background-color: white;
@@ -359,8 +358,7 @@ align-self: flex-end;
   align-items: center;
   cursor: pointer;
   margin: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px white;
+  margin-bottom: 20px;  
   border: none;
 }
 
@@ -371,7 +369,7 @@ align-self: flex-end;
 
 .btn-delete:hover{
   background-color: grey;
-  box-shadow: 0 0 10px white;
+  
   border: none;
 }
 
@@ -386,7 +384,7 @@ align-self: flex-end;
   cursor: pointer;
   margin: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 0 10px white;
+ 
   border: none;
 }
 
@@ -397,7 +395,7 @@ align-self: flex-end;
 
 .btn-edit:hover{
   background-color: grey;
-  box-shadow: 0 0 10px white;
+  
   border: none;
 }
 

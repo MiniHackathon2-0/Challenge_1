@@ -174,7 +174,7 @@ function loadCard(card, i) {
         top: ${card.posY}%;">
         <div id="cardContent${i}" class="card-content">
         <span>${card.question}</span>
-        <div class="button-box">
+        <div class="button-box-Card">
         <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
         <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
         </div>
@@ -192,7 +192,7 @@ function loadFlipCard(card, i) {
     return /*html*/`
         <div id="cardContent${i}" class="card-content" >
             <span>${card.answer}</span>
-            <div class="button-box">
+            <div class="button-box-Card">
         <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
         <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
         </div>
@@ -203,10 +203,12 @@ function loadFlipEnd(card, i) {
     return /*html*/`
         <div id="cardContent${i}" class="card-content" >
             <span>${card.question}</span>
-            <div class="button-box">
-        <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
-        <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
-        </div>
+            <div class="button-box-Card">
+                <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})">
+                <img src="./img/delete-icon.png" alt="delete Icon"></button>
+                <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})">
+                <img src="./img/edit-icon.png" alt="delete Icon"></button>
+            </div>
         </div>`;
 }
 
@@ -215,19 +217,23 @@ function editCardHTML(i) {
         <div class="container-backgroound" ">
             <div id="cardBoxAreaEdit" class="card-style">
                 <form  onsubmit="return editCardSend(event,${i})" method="post">
+                <div class="cardPosCenter">
                     <label for="front">Question</label>
                     <input type="text" id="frontEdit"  name="front" placeholder="Front Text" required value="${cards[i].question}">
-                    <label for="back">Answer</label>
-                    <input type="text" id="backEdit" name="back" placeholder="Back Text" required value="${cards[i].answer}">
+                    <label for="back">Answer</label>                    
+                    <textarea id="backEdit" name="back" placeholder="Back Text" required >${cards[i].answer}</textarea>
                     <label for="color">Color</label>
                     <input type="color" id="colorEdit" name="color"  value="${cards[i].color}">
                     <div class="button-box">
-                        <button type="button" onclick="closeEditCard(event)">Cancel</button>
-                        <button type="submit">Create</button>
+                        <button type="button" class="btn-cancel" onclick="closeEditCard(event)">Cancel</button>
+                        <button type="submit" class="btn-confirm">Create</button>
                     </div>
+                </div>
                 </form>
 
             </div>
         </div>
     `;
 }
+
+

@@ -6,16 +6,9 @@ function addNewCard() {
 }
 
 
-function closeNewCard(event) {
-    // event.stopPropagation();
+function closeNewCard(event) {    
     let cardBox = document.getElementById("cardBox");
-    cardBox.classList.add("d_none");
-    const QUESTION = document.getElementById("front").value;
-    const ANSWER = document.getElementById("back").value;
-    const COLOR = document.getElementById("color").value;
-    QUESTION = '';
-    ANSWER = '';
-    COLOR = '';
+    cardBox.classList.add("d_none");   
 }
 
 function stopCardArea() {
