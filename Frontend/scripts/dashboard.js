@@ -249,12 +249,7 @@ function renderCards() {
     }
 
 }
-function stopDeletAreaCard() {
-    let area = document.getElementById('deleteCardBtn');
-    area.addEventListener('click', (event) => {
-        event.stopPropagation()
-    })
-}
+
 function getMaxCoordinates(cardElement, parentElement) {
     const parentRect = parentElement.getBoundingClientRect();
     const cardRect = cardElement.getBoundingClientRect();
@@ -320,7 +315,7 @@ async function updateCardPosition(id, posX, posY) {
     }
     try {
         const response = await fetch(url + "/api/cards/" + id, {
-            method: "Put",
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
@@ -352,17 +347,17 @@ function loadBakcgroundColorAndName() {
 
 function flipAction(i) {
 
-    if (cards[i].isMoved) return;
-
+    if (cards[i].isMoved)  return;
+   
 
     if (!cards[i].isFlipped) {
         console.log('start:', cards[i].isFlipped);
-        stopDeletAreaCard();
+        
         flipCard(i);
+        
         console.log('end:', cards[i].isFlipped);
     } else {
-        console.log('start:', cards[i].isFlipped);
-        stopDeletAreaCard();
+        console.log('start:', cards[i].isFlipped);        
         flipEnd(i);
         console.log('end:', cards[i].isFlipped);
     }
