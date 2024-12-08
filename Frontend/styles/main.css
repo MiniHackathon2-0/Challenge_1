@@ -237,25 +237,25 @@ input {
     padding: 0 16px;
 }
 
-.sidebar-menu{
-    display: none;
-}
 
 .sidebar-menu > img{
     cursor: pointer;
     height: 24px;
 }
 
+
 @media (max-width: 768px) {
 
     .auth-form{ 
         margin-left: 0; 
     } 
+    
     .login-container {
         flex-direction: column;
         width: 70%; 
         height: auto; 
     }
+
     .login-container2 {
         flex-direction: column;
         width: 70%; 
@@ -263,6 +263,7 @@ input {
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
+
     .sign-in {
         margin: 1rem 0 ;
         text-align: center; 
@@ -272,33 +273,33 @@ input {
         width: 90%; 
         margin: 0 auto;
     }
+
     .right-container {
         display: none;
     }
+
     .right-container2 {
         display: none;
     }
+
     img {
         margin-top: 0px;
         margin-left: 0;
         cursor: pointer;
     }
-    #sidebar{
-        display: none;
+
+    .card {
+        scale: 0.7;
     }
 
-    .sidebar-menu{
-        display: block;
-        
+    #bgColorArea{
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
     .signin-button {
         width: 100%; 
-    }
-    #bgColorArea{
-        display: none;
     }
 }
 @media (max-width: 900px) {

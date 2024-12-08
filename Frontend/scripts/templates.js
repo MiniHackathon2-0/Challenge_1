@@ -81,7 +81,7 @@ function loadDashboard(channelName) {
         <div id="main">
             <div class="headerDiv">
                 <div style="display: flex; gap: 16px; align-items: center">
-                    <div class="sidebar-menu">
+                    <div class="sidebar-menu" id="sidebar-menu">
                         <img onclick="toggleSidebar()" src="./img/menu.png" alt="menu">
                     </div>
                     <div id="headerLanguageId">
@@ -251,7 +251,7 @@ function loadDashboardHelp() {
                     </ul>
                     <span>Here you can also find your Lernzettel and create new ones.</span>
                     <ul>
-                        <p>Click on the button <b>Neuer Lernzettel</b> to create a new Lernzettel.</p>
+                        <p>Click on the button <b>New card</b> to create a new Lernzettel.</p>
                         <p>Click on the icon <b>trash bin</b> to delete it.</p>
                         <p>Click on a Lernzettel to flip it.</p>
                     </ul>

@@ -55,3 +55,24 @@ function renderDashboardHelp() {
     cardArea.innerHTML = loadDashboardHelp();
     headerChannel.innerHTML = '';
 }
+
+
+function adjustSidebarDisplay() {
+    const sidebar = document.getElementById('sidebar');
+    const burger_menu = document.getElementById('sidebar-menu');
+    if (sidebar === null) {
+        return;
+    }
+
+    if (window.innerWidth <= 768) {
+        sidebar.style.display = 'none';
+        burger_menu.style.display = 'block';
+    } else {
+        sidebar.style.display = 'block';
+        burger_menu.style.display = 'none';
+    }
+}
+
+adjustSidebarDisplay();
+
+window.addEventListener('resize', adjustSidebarDisplay);

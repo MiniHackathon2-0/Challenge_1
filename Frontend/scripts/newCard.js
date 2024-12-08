@@ -42,8 +42,8 @@ function collectData() {
     const QUESTION = document.getElementById("front").value;
     const ANSWER = document.getElementById("back").value;
     const COLOR = document.getElementById("color").value;
-    const POSX = Math.random() * 90 + 5;
-    const POSY = Math.random() * 90 + 5;
+    const POSX = Math.random() * 40 + 5;
+    const POSY = Math.random() * 40 + 5;
     const CATEGORY = localStorage.getItem("curentCategory") || "Unterricht";
 
 

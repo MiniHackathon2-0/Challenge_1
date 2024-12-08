@@ -211,7 +211,7 @@ async function deleteChannel(i) {
         channels.splice(i, 1);
         loadChannelsData();
     } catch (error) {
-        console.log(error);
+        alert(error.message);
     }
 }
 
@@ -429,6 +429,9 @@ function toggleSidebar() {
 function updateCardZIndex(i) {
     if (activeCardIndex !== null && activeCardIndex !== i) {
         const prevCardElement = document.getElementById('movable' + activeCardIndex);
+        if (prevCardElement == null) {
+            return;
+        }
         prevCardElement.style.zIndex = ''; 
         cards[activeCardIndex].currentZIndex = 1; 
     }

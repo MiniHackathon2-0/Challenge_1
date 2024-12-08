@@ -6,7 +6,7 @@
 
 
 #sidebar {
-  width: 16rem;
+  width: 18rem;
   height: 100%;
   background-color: #111214;
   padding: 10px;
@@ -16,11 +16,12 @@
 #sidebar h2 {
   margin: 0 0 10px 0;
   color: #ffffff;
-  height: 40px;
+  font-size: xxx-large;
+  height: 56px;
 }
 
 .sidebar-menu-box{
-  height: calc(100% - 40px);
+  height: calc(100% - 56px);
   width: 100%;
   overflow: auto;
 }
@@ -258,6 +259,10 @@
   display: none;
 }
 
+.d_block{
+  display: block;
+}
+
 .input-new-channel input {
   width: 90%;
   margin-bottom: 10px;
@@ -336,6 +341,7 @@
   cursor: grab;
   padding-left: 10px;
   padding-right: 10px;
+
 }
 
 .button-box-Card{
@@ -358,22 +364,23 @@
   flex-direction: column; 
   justify-content: space-between; 
   cursor: grab;
-  
+
 }
 
 .card-content span{
   margin-top: 10px;
   margin-left: 10px;
+  color: whitesmoke;
 }
 
 .flip {
   transform-style: preserve-3d;
-  animation: flip 1s forwards;
+  animation: flip .6s forwards;
 }
 
 .flip-reverse {
   transform-style: preserve-3d; 
-  animation: flipBack 1s forwards; 
+  animation: flipBack .6s forwards; 
 }
 
 .flip-back{
@@ -395,6 +402,7 @@
   gap: 10px;
   color: white;
   text-align: center;
+
 }
 
 .Card-content-Back{
@@ -407,6 +415,7 @@
   gap: 10px;
   color: white;
   text-align: center;
+
 }
 
 .btn-delete{  
