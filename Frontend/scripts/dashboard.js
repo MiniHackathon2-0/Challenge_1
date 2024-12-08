@@ -5,7 +5,7 @@ let bgColor;
 let cards = [];
 let channelName;
 let clickCount = 0;
-
+let activeCardIndex = null;
 
 
 async function initDashboard() {
@@ -14,6 +14,7 @@ async function initDashboard() {
     await loadData();
     loadChannelsData();
     loadBakcgroundColorAndName();
+    renderDashboardHelp();
 };
 
 
@@ -33,7 +34,6 @@ async function loadData() {
 
         const result = await response.json();
         loadSubjectsArray(result);
-        console.log(result);
     } catch (error) {
         console.log(error);
     }
@@ -82,7 +82,8 @@ function loadCardsArray(result) {
             "isFlipped": false,
             "movedX": element.posX,
             "movedY": element.posY,
-            "isMoved": false
+            "isMoved": false,
+            "currentZIndex": 1
         };
         cards.push(newElement);
     }
@@ -150,7 +151,24 @@ function saveChannel() {
     let input = document.getElementById("input-channel");
     let channel = document.getElementById("languages");
     let inputFeld = document.getElementById("newInput");
+    let errorMessage1 = document.getElementById("error-channel");
+    let errorMessage2 = document.getElementById("invalide-channel-name");
     let channelInput = inputFeld.value;
+
+    if (channelInput.length < 3 || channelInput.length > 20) {
+        errorMessage2.classList.remove("d_none");
+        return;
+    } else {
+        errorMessage2.classList.add("d_none");
+    }
+
+    if (channels.some(channel => channel.title === channelInput)) {
+        errorMessage1.classList.remove("d_none");
+        return;
+    } else {
+        errorMessage1.classList.add("d_none");
+    }
+
     channel.innerHTML = '';
     overlay.classList.add("d_none");
     input.classList.add("d_none");
@@ -192,7 +210,7 @@ async function deleteChannel(i) {
         channels.splice(i, 1);
         loadChannelsData();
     } catch (error) {
-        console.log(error);
+        alert(error.message);
     }
 }
 
@@ -219,7 +237,6 @@ async function switchLanguage(i) {
     localStorage.setItem("curentCategory", channel.title);
     const header = document.getElementById("headerLanguageId");
     channelName = channels[i];
-    console.log(channelName);
     header.innerHTML = '';
     header.innerHTML = headerLanguage(channelName);
     await loadCards();
@@ -249,12 +266,7 @@ function renderCards() {
     }
 
 }
-function stopDeletAreaCard() {
-    let area = document.getElementById('deleteCardBtn');
-    area.addEventListener('click', (event) => {
-        event.stopPropagation()
-    })
-}
+
 function getMaxCoordinates(cardElement, parentElement) {
     const parentRect = parentElement.getBoundingClientRect();
     const cardRect = cardElement.getBoundingClientRect();
@@ -281,7 +293,6 @@ function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, card) {
     cardElement.style.cursor = "grab";
     document.removeEventListener("mousemove", mouseMoveHandler);
     document.removeEventListener("mouseup", mouseUpHandler);
-    console.log("Card moved:", card.id, card.posX, card.posY);
 
     if (
         (card.movedX !== card.posX) ||
@@ -304,6 +315,7 @@ function makeMovable(cardElement, i) {
         isDragging = true;
         offsetX = e.offsetX;
         offsetY = e.offsetY;
+        updateCardZIndex(i);
         cardElement.style.cursor = "grabbing";
         const parentElement = cardElement.parentElement;
         const mouseMoveHandler = (e) => moveCard(e, cardElement, offsetX, offsetY, parentElement, i);
@@ -320,7 +332,7 @@ async function updateCardPosition(id, posX, posY) {
     }
     try {
         const response = await fetch(url + "/api/cards/" + id, {
-            method: "Put",
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
@@ -331,8 +343,6 @@ async function updateCardPosition(id, posX, posY) {
         if (!response.ok) {
             throw new Error("Fehler beim Speichern der Position");
         }
-
-        console.log("Position erfolgreich gespeichert");
     } catch (error) {
         console.log("Fehler beim Speichern der Position:", error);
     }
@@ -353,18 +363,12 @@ function loadBakcgroundColorAndName() {
 function flipAction(i) {
 
     if (cards[i].isMoved) return;
-
-
+    updateCardZIndex(i);
+    
     if (!cards[i].isFlipped) {
-        console.log('start:', cards[i].isFlipped);
-        stopDeletAreaCard();
         flipCard(i);
-        console.log('end:', cards[i].isFlipped);
     } else {
-        console.log('start:', cards[i].isFlipped);
-        stopDeletAreaCard();
         flipEnd(i);
-        console.log('end:', cards[i].isFlipped);
     }
 
     cards[i].isFlipped = !cards[i].isFlipped;
@@ -399,4 +403,31 @@ function flipEnd(i) {
 function flipEndToStart(i) {
     const card = cards[i];
     return loadFlipEnd(card, i);
+}
+
+function toggleSidebar() {
+    let sidebar = document.getElementById("sidebar");
+    if (sidebar.style.display === "block") {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+    }
+}
+
+
+function updateCardZIndex(i) {
+    if (activeCardIndex !== null && activeCardIndex !== i) {
+        const prevCardElement = document.getElementById('movable' + activeCardIndex);
+        if (prevCardElement == null) {
+            return;
+        }
+        prevCardElement.style.zIndex = ''; 
+        cards[activeCardIndex].currentZIndex = 1; 
+    }
+
+    const currentCardElement = document.getElementById('movable' + i);
+    currentCardElement.style.zIndex = '1000';
+    cards[i].currentZIndex = 1000; 
+
+    activeCardIndex = i;
 }

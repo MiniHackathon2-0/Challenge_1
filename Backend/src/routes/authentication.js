@@ -26,16 +26,14 @@ router.post('/register', async (req, res) => {
             const salt = await bcrypt.genSalt(10)
             const hashedPassword = await bcrypt.hash(req.body.password, salt)
             const userData = getUserData(req.body, hashedPassword);
-            console.log('created user:', userData);
-
             const token = generateJWT(userData);
-
             const user = {
                 "id": userData.customId,
                 "name": userData.name,
                 "backgroundColor": userData.backgroundColor,
                 "jwtToken": token
             };
+
             await userData.save();
             return res.status(201).json(user);
         } catch (err) {
@@ -57,11 +55,7 @@ router.post('/login', async (req, res) => {
         return res.status(400).send('Invalid username or password');
     }
 
-    console.log(user);
-
-
     const token = generateJWT(user);
-
     res.status(200).json({
         "id": user.customId,
         "name": user.name,

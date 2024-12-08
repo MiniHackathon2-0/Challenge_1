@@ -43,3 +43,36 @@ function loadDashboardContent() {
     mainContainer.innerHTML = loadDashboard(channelName);
     initDashboard();
 }
+
+function renderDashboardHelp() {
+    const cardArea = document.getElementById("card-container");
+    let headerChannel = document.getElementById("headerLanguageId");
+    if (!cardArea) {
+        console.error("Container mit ID 'card-container' nicht gefunden.");
+        return;
+    }
+    cardArea.innerHTML = '';
+    cardArea.innerHTML = loadDashboardHelp();
+    headerChannel.innerHTML = '';
+}
+
+
+function adjustSidebarDisplay() {
+    const sidebar = document.getElementById('sidebar');
+    const burger_menu = document.getElementById('sidebar-menu');
+    if (sidebar === null) {
+        return;
+    }
+
+    if (window.innerWidth <= 768) {
+        sidebar.style.display = 'none';
+        burger_menu.style.display = 'block';
+    } else {
+        sidebar.style.display = 'block';
+        burger_menu.style.display = 'none';
+    }
+}
+
+adjustSidebarDisplay();
+
+window.addEventListener('resize', adjustSidebarDisplay);

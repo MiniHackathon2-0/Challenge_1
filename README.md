@@ -33,6 +33,8 @@ A small group project in connection with Kevin Chromik's MiniHackathon. The task
         ```bash
         DATABASE_URL
         PORT
+        JWT_SECRET
+        JWT_EXPIRES_IN
         ```
 
 1. Start `Frontend` and `Backend` with Docker Compose

@@ -8,13 +8,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10001;
 }
 
 .card-style{
     width: 520px;
-    height: 600px;
+    height: 480px;
     background-color: #111214;
     border-radius: 22px;
+
 }
 
 form{
@@ -24,15 +26,84 @@ form{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: x-large;
+    color: whitesmoke;
+    z-index: 10001;
 }
 
+.cardPosCenter{
+    width: 100%;
+    height: 100%;
+    padding: 28px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
 input{
-    width: 80%;
+    width: 100%;
     height: 50px;
-    border-radius: 35px;
+    border-radius: 8px;
     background-color: #141517;
-    border: none;
-    box-shadow: 0 0 10px white;
+    border: 1px solid gray;
     padding: 10px;
     outline: none;
+    color: whitesmoke;
+}
+
+textarea{
+    width: 100%;
+    height: 160px;
+    border-radius: 8px;
+    background-color: #141517;
+    border: 1px solid gray;
+    padding: 10px;
+    outline: none;
+    resize: none;
+    color: whitesmoke;
+}
+
+.button-box{
+    width: 100%;    
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-cancel{
+    margin-top: 8px;
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2D2D2F;
+    color: whitesmoke;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-cancel:hover{
+    scale: 1.1;
+    color: red;
+}
+
+.btn-confirm{
+    margin-top: 8px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #FAFBFD;
+    color: #000000;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-confirm:hover{
+    scale: 1.1;
+}
+
+#color{
+    cursor: pointer;
 }

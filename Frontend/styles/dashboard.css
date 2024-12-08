@@ -6,8 +6,9 @@
 
 
 #sidebar {
-  width: 10%;
-  background-color: #2b2e43;
+  width: 18rem;
+  height: 100%;
+  background-color: #111214;
   padding: 10px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
@@ -15,6 +16,14 @@
 #sidebar h2 {
   margin: 0 0 10px 0;
   color: #ffffff;
+  font-size: xxx-large;
+  height: 56px;
+}
+
+.sidebar-menu-box{
+  height: calc(100% - 56px);
+  width: 100%;
+  overflow: auto;
 }
 
 .language {
@@ -24,10 +33,51 @@
   color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-icon{
+  width: 24px;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.sidebar-btn{
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-add-btn{
+  display: flex;
+  justify-content: center;
 }
 
 .language:hover {
   background-color: #4d5275;
+}
+
+.help {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.help h1 {
+    margin-bottom: 80px;
+}
+
+.help span {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.help p {
+    margin-left: 10px;
 }
 
 #add-language {
@@ -49,16 +99,18 @@
   flex-grow: 1;
   padding: 20px;
   position: relative;
-  background-color: #1e1e2f;
+  background-color: #3D3D45;
 }
 
 .headerDiv {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 16px;
+  height: 80px;
 }
 
-#bgColor {
+.headerDiv span {
   padding: 8px;
   border-radius: 12px;
   border: none;
@@ -75,24 +127,26 @@
 
 #add-card {
   padding: 10px 15px;
-  background-color: #28a745;
+  background-color: #25282c;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3 ease-in-out;
 }
 
 #add-card:hover {
-  background-color: #218838;
+  background-color: #111214;
 }
 
 #card-container {
   position: relative;
   width: 100%;
   height: calc(90% - 50px);
-  border: 1px dashed #4d5275;
+  border: 1px dashed #111214;
   margin-top: 10px;
   overflow: hidden;
+  border-radius: 16px;
 }
 
 
@@ -181,27 +235,32 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #43444696;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-new-channel {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   flex-direction: column;
-  top: 30%;
-  left: 30%;
-  width: 300px;
-  height: 150px;
-  border-radius: 35px;
-
-  background-color: white;
+  width: 480px;
+  height: 200px;
+  border-radius: 12px;
+  background-color: #141517;
+  color: whitesmoke;
+  font-size: x-large;
 }
 
 .d_none {
   display: none;
+}
+
+.d_block{
+  display: block;
 }
 
 .input-new-channel input {
@@ -209,9 +268,23 @@
   margin-bottom: 10px;
   padding: 8px;
   border: 1px solid #555a77;
-  border-radius: 5px;
+  border-radius: 8px;
+  color: whitesmoke;
+  font-size: x-large;
+}
 
-  color: black;
+.input-new-channel-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.error-span{
+  color: red;
+  font-size: small;
 }
 
 .delet-chanel-area {
@@ -221,6 +294,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10001;
 }
 
 .deletAreaError {
@@ -235,7 +309,7 @@
   width: 300px;
   height: 150px;
   border-radius: 35px;
-  background-color: white;
+  /* background-color: white; */
 }
 
 .delet-area{
@@ -257,42 +331,56 @@
 
 .card {
   position: absolute;
-  width: 150px;
-  height: 100px; 
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
+  width: 300px;
+  min-height: 200px; 
+  border-radius: 16px;
+  display: flex;  
   align-items: center;
-  flex-direction: column;  
+  flex-direction: column; 
+  justify-content: space-between; 
   cursor: grab;
-  
- 
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+
+.button-box-Card{
+  margin-top: 10px;
+  width: 80%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  border-top: 2px solid #ccc;
 }
 
 .card-content{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 300px;
+  min-height: 200px; 
+  border-radius: 16px;
+  display: flex;  
   align-items: center;
-  gap: 10px;
-  color: white;
-  text-align: center;
+  flex-direction: column; 
+  justify-content: space-between; 
+  cursor: grab;
+
+}
+
+.card-content span{
+  margin-top: 10px;
+  margin-left: 10px;
+  color: whitesmoke;
 }
 
 .flip {
- 
-  transform-style: preserve-3d; /* Behalten des 3D-Stils */
-  animation: flip 1s forwards; /* Flip-Animation anwenden */ 
-  
+  transform-style: preserve-3d;
+  animation: flip .6s forwards;
 }
+
 .flip-reverse {
- 
-  transform-style: preserve-3d; /* Behalten des 3D-Stils */
-  animation: flipBack 1s forwards; /* Flip-Animation anwenden */ 
-  
+  transform-style: preserve-3d; 
+  animation: flipBack .6s forwards; 
 }
 
 .flip-back{
@@ -314,6 +402,7 @@
   gap: 10px;
   color: white;
   text-align: center;
+
 }
 
 .Card-content-Back{
@@ -326,49 +415,96 @@
   gap: 10px;
   color: white;
   text-align: center;
+
 }
 
-.btn-delete{
+.btn-delete{  
   width: 60px;
-  height: 20px;
+  height: 40px;
   background-color: white;
-  border-radius: 35px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px white;
   border: none;
+}
+
+.btn-delete img{
+  width: 30px;
+  height: 30px;
 }
 
 .btn-delete:hover{
   background-color: grey;
-  box-shadow: 0 0 10px white;
+  
+  border: none;
+}
+
+.btn-edit{ 
+  width: 60px;
+  height: 40px;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-edit img{
+  width: 30px;
+  height: 30px;
+}
+
+.btn-edit:hover{
+  background-color: grey;
+  
   border: none;
 }
 
 @keyframes flip {
   0% {
-      transform: rotateY(0deg); /* Anfangszustand (Vorderseite sichtbar) */
+      transform: rotateY(0deg);
   }
   50% {
-      transform: rotateY(90deg); /* Zwischenzustand (Karte dreht sich zur Seite) */
+      transform: rotateY(90deg);
   }
   100% {
-      transform: rotateY(180deg); /* Endzustand (Rückseite sichtbar) */
+      transform: rotateY(180deg); 
   }
 }
 
 @keyframes flipBack {
   0% {
-      transform: rotateY(180deg); /* Anfangszustand (Vorderseite sichtbar) */
+      transform: rotateY(180deg); 
   }
   50% {
-      transform: rotateY(90deg); /* Zwischenzustand (Karte dreht sich zur Seite) */
+      transform: rotateY(90deg); 
   }
   100% {
-      transform: rotateY(0deg); /* Endzustand (Rückseite sichtbar) */
+      transform: rotateY(0deg);
   }
+}
+
+.z-index999{
+  z-index: 999;
+}
+
+.logoutBtn{
+  background-color: #25282c;
+  padding: 12px !important;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.logoutBtn:hover{
+  background-color: #111214;
+}
+
+.deleteQuestionBox{
+  width: auto !important;
+  height: auto !important;
+  padding: 16px;
 }

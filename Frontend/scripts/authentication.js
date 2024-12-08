@@ -10,8 +10,6 @@ async function registerUser(event) {
     }
 
     try {
-        console.log(url + "/auth/register");
-
         const response = await fetch(url + "/auth/register", {
             method: "POST",
             headers: {
@@ -61,7 +59,6 @@ async function loginUser(event) {
         }
 
         const result = await response.json();
-        console.log(result);
 
         if (result.jwtToken) {
             localStorage.setItem("jwtToken", result.jwtToken);
@@ -112,4 +109,10 @@ function clearValues() {
     name = '';
     password = '';
     passwordRepeat = '';
+}
+
+function logout() {
+    let mainContainer = document.getElementById("mainContainer");
+    mainContainer.innerHTML = "";
+    mainContainer.innerHTML = loadLogin();
 }

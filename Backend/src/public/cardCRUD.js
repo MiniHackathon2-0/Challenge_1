@@ -98,7 +98,6 @@ async function updateCard(req, res) {
 async function deleteCard(req, res) {
     try {
         const cardId = req.params.id;
-        console.log('cardId: ', cardId);
 
         await Card.deleteOne({ _id: cardId });
         res.status(200).send({ message: 'Card deleted successfully' });
