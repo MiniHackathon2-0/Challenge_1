@@ -1,39 +1,67 @@
 function loadLogin() {
-  return /*html*/ `
-    <div class="authScreen">
-        <div class="loginArea">
-            <span>Wellcome Back </span>
-
-            <form id="loginForm" class="form" onsubmit="return loginUser(event)">
-                <input class="input" type="text" placeholder="Name" id="usernameLogin" required>
-                <input class="input" type="password" name="password" id="passwordLogin" placeholder="Password" required>
-                <a onclick="loadRegisterContent()">Registry</a>
-                <button class="btn" type="submit">Login</button>
-            </form>
+    return /*html*/ `
+    <div class="loginArea">
+        <div class="login-container">
+            <div class="input">
+                <p class="sign-in">Sign in</p>
+                <form id="loginForm" class="auth-form" onsubmit="return loginUser(event)">
+                    <div style="width: 100%; margin-bottom: 24px">
+                        <p class="over-input-username">Username</p>
+                        <input class="input" type="text" placeholder="Name" id="usernameLogin" required
+                            class="input-username">
+                    </div>
+                    <div style="width: 100%">
+                        <p class="over-input-username">Password</p>
+                        <input class="input" type="password" name="password" id="passwordLogin" placeholder="Password"
+                            required>
+                    </div>
+                    <div style="width: 100%">
+                        <button type="submit" class="Sign-in-button">Sign in</button>
+                        <div class="registry-bottom">
+                            <a onclick="loadRegisterContent()" class="sign-up-button">Create an Account</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="right-container"></div>
         </div>
     </div>
     `;
 }
 
 function loadRegister() {
-  return /*html*/ `
-    <div class="authScreen">
-        <div class="register" onload="clearValues()">
-            <img onclick="loadLoginContent()" src="/img/arrow_left.png" alt="arrow left">
-            <span>Create Account</span>
-            <form id="registForm" class="registform" onsubmit="return registerUser(event)" method="post">
-                <input class="input" type="text" id="username" placeholder="Username" required>
-                <input class="input" type="password" name="password" id="passwordReg" placeholder="Password" required>
-                <input class="input" type="password" name="password" id="passwordRepeat" placeholder=" Repeat Password" required>
-                <button class="btn" type="submit">Register</button>
-            </form>
+    return /*html*/ `
+    <div class="register">
+            <div class="login-container">
+                <div class="input">
+                    <div class="register-header">
+                        <img class="arrow" onclick="loadLoginContent()" src="./img/arrow_right.png" alt="arrow left">
+                        <p class="sign-up">Create Account</p>
+                    </div>
+                    <form id="registForm" class="auth-form" onsubmit="return registerUser(event)" method="post">
+                        <div> 
+                            <p class="over-input-username">Username</p> 
+                        </div>
+                        <input class="input" type="text" id="username" placeholder="Username" required>
+                        <div> 
+                            <div class="over-input">
+                                <p class="over-input-username">Password</p> </div>
+                            </div>
+                            <input class="input" type="password" name="password" id="passwordReg" placeholder="Password" required>
+                            <input class="input" type="password" name="password" id="passwordRepeat" placeholder="Repeat Password" required>
+                        <div>
+                            <button type="submit" class="Sign-in-button">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="right-container"></div>
+            </div>
         </div>
-    </div>
         `;
 }
 
 function loadDashboard(channelName) {
-  return /*html*/ `
+    return /*html*/ `
     <div id="app">
         <div id="sidebar">
             <h2>Sprachen</h2>
@@ -82,13 +110,13 @@ function loadDashboard(channelName) {
 }
 
 function headerLanguage(channel) {
-return /*html*/`
+    return /*html*/`
     <h2 id="current-language">${channel.title}</h2>
     <button id="add-card" onclick="addNewCard('')">Neuer Lernzettel</button>`;
-    
+
 }
 
-function loadLanguage(channel,i) {    
+function loadLanguage(channel, i) {
     return `
         <div class="language" data-language="${channel.title}" onclick="switchLanguage(${i})" 
         ondblclick="deleteChannelOpen(${i})">${channel.title}</div>`;
@@ -103,7 +131,7 @@ function inputChannel() {
 }
 
 
-function newCardHTML(){
+function newCardHTML() {
     return /*html*/`
         <div class="container-backgroound" ">
             <div id="cardBoxArea" class="card-style">
@@ -137,4 +165,38 @@ function deletArea(i) {
             </div>
         </div>`;
 
+}
+
+function loadCard(card, i) {
+    return /*html*/`
+        <div id="movable${i}" onclick="flipAction(${i})"  class="card" style="background-color: ${card.color};
+        left: ${card.posX}%; 
+        top: ${card.posY}%;">
+        <div id="cardContent${i}" class="card-content">
+        <span>${card.question}</span>
+        <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard(${i})">Delete</button>
+        </div>
+        
+        </div>
+        `;
+
+}
+
+
+
+
+function loadFlipCard(card, i) {
+    return /*html*/`
+        <div id="cardContent${i}" class="card-content" >
+            <span>${card.answer}</span>
+            <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
+        </div>`;
+}
+
+function loadFlipEnd(card, i) {
+    return /*html*/`
+        <div id="cardContent${i}" class="card-content" >
+            <span>${card.question}</span>
+            <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
+        </div>`;
 }
