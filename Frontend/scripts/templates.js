@@ -64,12 +64,17 @@ function loadDashboard(channelName) {
     return /*html*/ `
     <div id="app">
         <div id="sidebar">
-            <h2>Sprachen</h2>
-            <div id="languages">
-                
-                
+            <h2>Learnify</h2>
+            <div class="sidebar-btn">
+                <span class="language" onclick="renderDashboardHelp()">Dashboard</span>
+                <div class="sidebar-btn" id="languages">
+                    
+                    
+                </div>
             </div>
-            <button id="add-language" onclick="newChannel()">+</button>
+            <div class="sidebar-add-btn">
+                <button id="add-language" onclick="newChannel()">+</button>
+            </div>
         </div>
         <div id="main">
             <div class="headerDiv">
@@ -80,7 +85,8 @@ function loadDashboard(channelName) {
                     <span id="bgColor" >Hallo ${userName}</span>
                 </div>
             </div>
-            <div id="card-container" data-language="Englisch"></div>
+            <div id="card-container">
+            </div>
         </div>
     </div>    
 `;
@@ -88,7 +94,7 @@ function loadDashboard(channelName) {
 
 function headerLanguage(channel) {
     return /*html*/`
-    <h2 id="current-language">${channel.title}</h2>
+    <h2 style="color: white" id="current-language">${channel.title}</h2>
     <button id="add-card" onclick="addNewCard('')">Neuer Lernzettel</button>`;
 
 }
@@ -221,3 +227,25 @@ function editCardHTML(i) {
 }
 
 
+function loadDashboardHelp() {
+    return /*html*/`
+        <div style="height: 100%">
+            <div class="help">
+                <h1>Welcome to our Learnify</h1>
+                <div>
+                    <span >You can create new channels.</span>
+                    <ul style="margin-bottom: 20px">
+                        <p>Click on the button <b>+</b> to create a new channel.</p>
+                        <p>Click on the icon <b>trash bin</b> to delete it.</p>
+                    </ul>
+                    <span>Here you can also find your Lernzettel and create new ones.</span>
+                    <ul>
+                        <p>Click on the button <b>Neuer Lernzettel</b> to create a new Lernzettel.</p>
+                        <p>Click on the icon <b>trash bin</b> to delete it.</p>
+                        <p>Click on a Lernzettel to flip it.</p>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `;
+}

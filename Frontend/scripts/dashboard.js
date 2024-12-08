@@ -14,6 +14,7 @@ async function initDashboard() {
     await loadData();
     loadChannelsData();
     loadBakcgroundColorAndName();
+    renderDashboardHelp();
 };
 
 

@@ -43,3 +43,13 @@ function loadDashboardContent() {
     mainContainer.innerHTML = loadDashboard(channelName);
     initDashboard();
 }
+
+function renderDashboardHelp() {
+    const cardArea = document.getElementById("card-container");
+    if (!cardArea) {
+        console.error("Container mit ID 'card-container' nicht gefunden.");
+        return;
+    }
+    cardArea.innerHTML = '';
+    cardArea.innerHTML = loadDashboardHelp();
+}
