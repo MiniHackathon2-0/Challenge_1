@@ -34,7 +34,6 @@ async function loadData() {
 
         const result = await response.json();
         loadSubjectsArray(result);
-        console.log(result);
     } catch (error) {
         console.log(error);
     }
@@ -238,7 +237,6 @@ async function switchLanguage(i) {
     localStorage.setItem("curentCategory", channel.title);
     const header = document.getElementById("headerLanguageId");
     channelName = channels[i];
-    console.log(channelName);
     header.innerHTML = '';
     header.innerHTML = headerLanguage(channelName);
     await loadCards();
@@ -295,7 +293,6 @@ function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, card) {
     cardElement.style.cursor = "grab";
     document.removeEventListener("mousemove", mouseMoveHandler);
     document.removeEventListener("mouseup", mouseUpHandler);
-    console.log("Card moved:", card.id, card.posX, card.posY);
 
     if (
         (card.movedX !== card.posX) ||
@@ -346,8 +343,6 @@ async function updateCardPosition(id, posX, posY) {
         if (!response.ok) {
             throw new Error("Fehler beim Speichern der Position");
         }
-
-        console.log("Position erfolgreich gespeichert");
     } catch (error) {
         console.log("Fehler beim Speichern der Position:", error);
     }
@@ -371,15 +366,9 @@ function flipAction(i) {
     updateCardZIndex(i);
     
     if (!cards[i].isFlipped) {
-        console.log('start:', cards[i].isFlipped);
-
         flipCard(i);
-
-        console.log('end:', cards[i].isFlipped);
     } else {
-        console.log('start:', cards[i].isFlipped);
         flipEnd(i);
-        console.log('end:', cards[i].isFlipped);
     }
 
     cards[i].isFlipped = !cards[i].isFlipped;

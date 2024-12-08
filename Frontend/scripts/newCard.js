@@ -27,7 +27,6 @@ async function createCard(event) {
         const resp = await createCardFetch(bodyData);
         cards.push(resp);
         renderCards();
-        console.log("Card created successfully:", resp);
         closeNewCard(event);
     } catch (error) {
         console.error("Error during card creation:", error);
@@ -130,7 +129,6 @@ async function editCardSend(event, i) {
         const resp = await editCardFetch(bodyData,i);
         
         await newLoadCards();
-        console.log("Card created successfully:", resp);
         closeEditCard();
     } catch (error) {
         console.error("Error during card creation:", error);
