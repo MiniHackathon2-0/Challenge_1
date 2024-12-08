@@ -6,7 +6,7 @@
 
 
 #sidebar {
-  width: 10%;
+  width: 10rem;
   background-color: #2b2e43;
   padding: 10px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
@@ -26,8 +26,40 @@
   cursor: pointer;
 }
 
+.sidebar-btn{
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-add-btn{
+  display: flex;
+  justify-content: center;
+}
+
 .language:hover {
   background-color: #4d5275;
+}
+
+.help {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.help h1 {
+    margin-bottom: 80px;
+}
+
+.help span {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.help p {
+    margin-left: 10px;
 }
 
 #add-language {
