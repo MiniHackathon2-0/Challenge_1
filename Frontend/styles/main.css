@@ -12,6 +12,22 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom right, #4d7fff 0%, #1a56ff 100%);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #ddd;
+    border: 1px solid #ccc;
+}
+  
+
 .loginArea {
     display: flex;
     flex-direction: column;
@@ -145,10 +161,17 @@ input {
     display: flex;
     align-items: center;
     gap: 16px;
+    margin-left: 3.1rem;
+    width: 400px;
 }
 
 .register-header > img{
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.register-header > img:hover{
+    scale: 1.1;
 }
 
 /* img {

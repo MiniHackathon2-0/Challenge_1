@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10001;
 }
 
 .card-style{
@@ -27,6 +28,7 @@ form{
     align-items: center;
     font-size: x-large;
     color: whitesmoke;
+    z-index: 10001;
 }
 
 .cardPosCenter{

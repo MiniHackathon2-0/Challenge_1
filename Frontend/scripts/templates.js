@@ -65,15 +65,17 @@ function loadDashboard(channelName) {
     <div id="app">
         <div id="sidebar">
             <h2>Learnify</h2>
-            <div class="sidebar-btn">
-                <span class="language" onclick="renderDashboardHelp()">Dashboard</span>
-                <div class="sidebar-btn" id="languages">
+            <div class="sidebar-menu-box">
+                <div class="sidebar-btn">
+                    <span class="language" onclick="renderDashboardHelp()">Dashboard</span>
+                    <div class="sidebar-btn" id="languages">
 
 
+                    </div>
                 </div>
-            </div>
-            <div class="sidebar-add-btn">
-                <button id="add-language" onclick="newChannel()">+</button>
+                <div class="sidebar-add-btn">
+                    <button id="add-language" onclick="newChannel()">+</button>
+                </div>
             </div>
         </div>
         <div id="main">
@@ -86,13 +88,13 @@ function loadDashboard(channelName) {
                         
                     </div>
                 </div>
-                <div style="display: flex; gap: 16px">
+                <div style="display: flex; align-items: center; gap: 16px">
                     <div id="bgColorArea" class="whiteBackground">
                         <span id="bgColor" >Hallo ${userName}</span>
                     </div>
-                    <div class="whiteBackground">
-                        <span style="cursor: pointer;color: red" onclick="logout()">Logout</span>
-                    </div>
+                    <!-- <div class="loggoutBox"> -->
+                        <span class="logoutBtn" onclick="logout()">Logout</span>
+                    <!-- </div> -->
                 </div>
             </div>
             <div id="card-container">
@@ -105,21 +107,23 @@ function loadDashboard(channelName) {
 function headerLanguage(channel) {
     return /*html*/`
     <h2 style="color: white" id="current-language">${channel.title}</h2>
-    <button id="add-card" onclick="addNewCard('')">Neuer Lernzettel</button>`;
+    <button id="add-card" onclick="addNewCard('')">New card</button>`;
 
 }
 
 function loadLanguage(channel, i) {
     return `
-        <div class="language" data-language="${channel.title}" onclick="switchLanguage(${i})" 
-        ondblclick="deleteChannelOpen(${i})">${channel.title}</div>`;
+        <div class="language" data-language="${channel.title}" onclick="switchLanguage(${i})">
+            ${channel.title} 
+            <img src="./img/delete-icon-red.png" alt="delete Icon" class="delete-icon" onclick="deleteChannelOpen(${i})">
+        </div>`;
 }
 
 function inputChannel() {
     return `
     <div id="input-channel" class="input-new-channel d_none"><span>New Channel</span>
         <div class="input-new-channel-box">
-            <input id="newInput" type="text" placeholder="3-40 characters">
+            <input id="newInput" type="text" placeholder="3-20 characters">
             <span id="error-channel" class="error-span d_none">Channel already exists</span>
             <span id="invalide-channel-name" class="error-span d_none">Channelname is too short/long</span>
         </div>
@@ -155,8 +159,8 @@ function newCardHTML() {
 
 function deletArea(i) {
     return /*html*/`
-        <div id="deletChanelAreaStop" class="deletAreaError">
-            <div class="card-style delet-area">
+        <div id="deletChanelAreaStop" class="deletAreaError deleteQuestionBox">
+            <div class="card-style delet-area deleteQuestionBox">
                 <span>Are you sure you want to delete the channel?</span>
                 <div class="button-box-delet">    
                     <button class="btn-confirm" onclick="deleteChannel('${i}')">Yes</button>                    

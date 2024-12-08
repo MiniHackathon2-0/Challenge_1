@@ -156,7 +156,7 @@ function saveChannel() {
     let errorMessage2 = document.getElementById("invalide-channel-name");
     let channelInput = inputFeld.value;
 
-    if (channelInput.length < 3 || channelInput.length > 40) {
+    if (channelInput.length < 3 || channelInput.length > 20) {
         errorMessage2.classList.remove("d_none");
         return;
     } else {
