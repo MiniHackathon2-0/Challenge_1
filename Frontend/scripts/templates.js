@@ -82,30 +82,7 @@ function loadDashboard(channelName) {
             </div>
             <div id="card-container" data-language="Englisch"></div>
         </div>
-    </div>
-
-    <div id="language-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Neue Sprache hinzufügen</h3>
-            <input type="text" id="new-language" placeholder="Sprache eingeben">
-            <button id="save-language">Speichern</button>
-            <button id="cancel-language">Abbrechen</button>
-        </div>
-    </div>
-
-    <div id="card-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Lernzettel erstellen</h3>
-            <label for="front-text">Vorderseite:</label>
-            <input type="text" id="front-text" placeholder="Text für die Vorderseite">
-            <label for="back-text">Rückseite:</label>
-            <input type="text" id="back-text" placeholder="Text für die Rückseite">
-            <label for="card-color">Farbe:</label>
-            <input type="color" id="card-color" value="#ffffff">
-            <button id="create-card">Erstellen</button>
-            <button id="cancel-card">Abbrechen</button>
-        </div>
-    </div>
+    </div>    
 `;
 }
 
