@@ -56,21 +56,19 @@ async function deleteChannel(req, res) {
     try {
         const channelId = req.params.id;
         const channel = await Channel.findById(channelId);
-        console.log(channel);
-
 
         if (!channel) {
-            return res.status(404).send({ error: 'Channel not found' });
+            return res.status(404).send('Channel not found');
         }
 
         if (req.user.id !== channel.creator) {
-            return res.status(400).send({message: 'You are not the creator of this channel'});
+            return res.status(400).send('You are not the creator of this channel');
         }
 
         await Card.deleteMany({ category: channel.title });
 
         await Channel.deleteOne({ _id: channelId });
-        res.status(200).send({ message: 'Channel deleted successfully' });
+        res.status(200).send('Channel deleted successfully');
 
     } catch (err) {
         console.error('Error deleting channel:', err);
