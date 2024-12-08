@@ -68,8 +68,8 @@ function loadDashboard(channelName) {
             <div class="sidebar-btn">
                 <span class="language" onclick="renderDashboardHelp()">Dashboard</span>
                 <div class="sidebar-btn" id="languages">
-                    
-                    
+
+
                 </div>
             </div>
             <div class="sidebar-add-btn">
@@ -78,11 +78,21 @@ function loadDashboard(channelName) {
         </div>
         <div id="main">
             <div class="headerDiv">
-                <div id="headerLanguageId">
-                    
+                <div style="display: flex; gap: 16px; align-items: center">
+                    <div class="sidebar-menu">
+                        <img onclick="toggleSidebar()" src="./img/menu.png" alt="menu">
+                    </div>
+                    <div id="headerLanguageId">
+                        
+                    </div>
                 </div>
-                <div class="whiteBackground">
-                    <span id="bgColor" >Hallo ${userName}</span>
+                <div style="display: flex; gap: 16px">
+                    <div id="bgColorArea" class="whiteBackground">
+                        <span id="bgColor" >Hallo ${userName}</span>
+                    </div>
+                    <div class="whiteBackground">
+                        <span style="cursor: pointer;color: red" onclick="logout()">Logout</span>
+                    </div>
                 </div>
             </div>
             <div id="card-container">

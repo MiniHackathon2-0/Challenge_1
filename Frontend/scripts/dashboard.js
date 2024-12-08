@@ -365,17 +365,17 @@ function loadBakcgroundColorAndName() {
 
 function flipAction(i) {
 
-    if (cards[i].isMoved)  return;
-   
+    if (cards[i].isMoved) return;
+
 
     if (!cards[i].isFlipped) {
         console.log('start:', cards[i].isFlipped);
-        
+
         flipCard(i);
-        
+
         console.log('end:', cards[i].isFlipped);
     } else {
-        console.log('start:', cards[i].isFlipped);        
+        console.log('start:', cards[i].isFlipped);
         flipEnd(i);
         console.log('end:', cards[i].isFlipped);
     }
@@ -412,4 +412,13 @@ function flipEnd(i) {
 function flipEndToStart(i) {
     const card = cards[i];
     return loadFlipEnd(card, i);
+}
+
+function toggleSidebar() {
+    let sidebar = document.getElementById("sidebar");
+    if (sidebar.style.display === "block") {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+    }
 }

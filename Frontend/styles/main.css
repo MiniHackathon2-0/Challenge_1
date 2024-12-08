@@ -214,7 +214,16 @@ input {
     padding: 0 16px;
 }
 
-/* @media (max-width: 768px) {
+.sidebar-menu{
+    display: none;
+}
+
+.sidebar-menu > img{
+    cursor: pointer;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
 
     .auth-form{ 
         margin-left: 0; 
@@ -251,11 +260,22 @@ input {
         margin-left: 0;
         cursor: pointer;
     }
+    #sidebar{
+        display: none;
+    }
+
+    .sidebar-menu{
+        display: block;
+        
+    }
 }
 
 @media (max-width: 480px) {
     .signin-button {
         width: 100%; 
+    }
+    #bgColorArea{
+        display: none;
     }
 }
 @media (max-width: 900px) {
@@ -271,4 +291,4 @@ input {
     .login-container {
         justify-content: space-between; 
     }
-} */
+}

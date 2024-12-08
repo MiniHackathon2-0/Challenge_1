@@ -87,10 +87,11 @@
 .headerDiv {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 16px;
 }
 
-#bgColor {
+.headerDiv span {
   padding: 8px;
   border-radius: 12px;
   border: none;

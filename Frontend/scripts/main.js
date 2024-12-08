@@ -46,10 +46,12 @@ function loadDashboardContent() {
 
 function renderDashboardHelp() {
     const cardArea = document.getElementById("card-container");
+    let headerChannel = document.getElementById("headerLanguageId");
     if (!cardArea) {
         console.error("Container mit ID 'card-container' nicht gefunden.");
         return;
     }
     cardArea.innerHTML = '';
     cardArea.innerHTML = loadDashboardHelp();
+    headerChannel.innerHTML = '';
 }

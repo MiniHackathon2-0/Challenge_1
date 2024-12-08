@@ -113,3 +113,9 @@ function clearValues() {
     password = '';
     passwordRepeat = '';
 }
+
+function logout() {
+    let mainContainer = document.getElementById("mainContainer");
+    mainContainer.innerHTML = "";
+    mainContainer.innerHTML = loadLogin();
+}
