@@ -150,7 +150,24 @@ function saveChannel() {
     let input = document.getElementById("input-channel");
     let channel = document.getElementById("languages");
     let inputFeld = document.getElementById("newInput");
+    let errorMessage1 = document.getElementById("error-channel");
+    let errorMessage2 = document.getElementById("invalide-channel-name");
     let channelInput = inputFeld.value;
+
+    if (channelInput.length < 3 || channelInput.length > 40) {
+        errorMessage2.classList.remove("d_none");
+        return;
+    } else {
+        errorMessage2.classList.add("d_none");
+    }
+
+    if (channels.some(channel => channel.title === channelInput)) {
+        errorMessage1.classList.remove("d_none");
+        return;
+    } else {
+        errorMessage1.classList.add("d_none");
+    }
+
     channel.innerHTML = '';
     overlay.classList.add("d_none");
     input.classList.add("d_none");

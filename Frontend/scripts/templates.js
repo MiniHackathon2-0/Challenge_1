@@ -126,9 +126,9 @@ function inputChannel() {
     return `
     <div id="input-channel" class="input-new-channel d_none"><span>New Channel</span>
         <div class="input-new-channel-box">
-            <input id="newInput" type="text">
-            <span id="error-channel" class="error-span">Channel already exists</span>
-            <span id="invalide-channel-name" class="error-span">Channelname is too short/long</span>
+            <input id="newInput" type="text" placeholder="3-40 characters">
+            <span id="error-channel" class="error-span d_none">Channel already exists</span>
+            <span id="invalide-channel-name" class="error-span d_none">Channelname is too short/long</span>
         </div>
         <div class="button-box padding16pxLR">
             <button id="cancel-channel" onclick="cancelChannel()" class="btn-cancel">Cancel</button>
