@@ -170,19 +170,16 @@ function deletArea(i) {
 function loadCard(card, i) {
     return /*html*/`
         <div id="movable${i}" onclick="flipAction(${i})"  class="card" style="background-color: ${card.color};
-        left: ${card.posX}%; 
-        top: ${card.posY}%;">
-        <div id="cardContent${i}" class="card-content">
-        <span>${card.question}</span>
-        <div class="button-box-Card">
-        <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
-        <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
-        </div>
-        </div>
-        
-        </div>
-        `;
-
+            left: ${card.posX}%; 
+            top: ${card.posY}%;">
+            <div id="cardContent${i}" class="card-content">
+                <span>${card.question}</span>
+                <div class="button-box-Card">
+                    <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
+                    <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
+                </div>
+            </div>
+        </div>`;
 }
 
 
@@ -193,9 +190,9 @@ function loadFlipCard(card, i) {
         <div id="cardContent${i}" class="card-content" >
             <span>${card.answer}</span>
             <div class="button-box-Card">
-        <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
-        <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
-        </div>
+                <button id="deleteCardBtn" class="btn-delete"  onclick="event.stopPropagation();deleteCard(${i})"><img src="./img/delete-icon.png" alt="delete Icon"></button>
+                <button id="editCardArea" class="btn-edit"  onclick="event.stopPropagation();editcard(${i})"><img src="./img/edit-icon.png" alt="delete Icon"></button>
+            </div>
         </div>`;
 }
 

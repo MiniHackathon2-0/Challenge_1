@@ -5,7 +5,7 @@ let bgColor;
 let cards = [];
 let channelName;
 let clickCount = 0;
-
+let activeCardIndex = null;
 
 
 async function initDashboard() {
@@ -83,7 +83,8 @@ function loadCardsArray(result) {
             "isFlipped": false,
             "movedX": element.posX,
             "movedY": element.posY,
-            "isMoved": false
+            "isMoved": false,
+            "currentZIndex": 1
         };
         cards.push(newElement);
     }
@@ -317,6 +318,7 @@ function makeMovable(cardElement, i) {
         isDragging = true;
         offsetX = e.offsetX;
         offsetY = e.offsetY;
+        updateCardZIndex(i);
         cardElement.style.cursor = "grabbing";
         const parentElement = cardElement.parentElement;
         const mouseMoveHandler = (e) => moveCard(e, cardElement, offsetX, offsetY, parentElement, i);
@@ -366,8 +368,8 @@ function loadBakcgroundColorAndName() {
 function flipAction(i) {
 
     if (cards[i].isMoved) return;
-
-
+    updateCardZIndex(i);
+    
     if (!cards[i].isFlipped) {
         console.log('start:', cards[i].isFlipped);
 
@@ -421,4 +423,19 @@ function toggleSidebar() {
     } else {
         sidebar.style.display = "block";
     }
+}
+
+
+function updateCardZIndex(i) {
+    if (activeCardIndex !== null && activeCardIndex !== i) {
+        const prevCardElement = document.getElementById('movable' + activeCardIndex);
+        prevCardElement.style.zIndex = ''; 
+        cards[activeCardIndex].currentZIndex = 1; 
+    }
+
+    const currentCardElement = document.getElementById('movable' + i);
+    currentCardElement.style.zIndex = '1000';
+    cards[i].currentZIndex = 1000; 
+
+    activeCardIndex = i;
 }

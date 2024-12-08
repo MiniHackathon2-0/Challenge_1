@@ -102,11 +102,11 @@ async function deleteCardFetch(card) {
 }
 
 function editcard(i) {
-let card = cards[i];
-let cardBox = document.getElementById("cardBoxEdit");
-cardBox.classList.remove("d_none");
-cardBox.innerHTML = editCardHTML(i);
-stopEditArea();    
+    let card = cards[i];
+    let cardBox = document.getElementById("cardBoxEdit");
+    cardBox.classList.remove("d_none");
+    cardBox.innerHTML = editCardHTML(i);
+    stopEditArea();    
 }
 
 function closeEditCard() {
