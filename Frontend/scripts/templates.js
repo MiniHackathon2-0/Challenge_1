@@ -133,24 +133,24 @@ function inputChannel() {
 
 function newCardHTML() {
     return /*html*/`
-        <div class="container-backgroound" ">
+        <div class="container-backgroound">
             <div id="cardBoxArea" class="card-style">
                 <form  onsubmit="return createCard(event)" method="post">
-                    <label for="front">Question</label>
-                    <input type="text" id="front"  name="front" placeholder="Front Text" required>
-                    <label for="back">Answer</label>
-                    <input type="text" id="back" name="back" placeholder="Back Text" required>
-                    <label for="color">Color</label>
-                    <input type="color" id="color" name="color" value="#ffffff">
-                    <div class="button-box">
-                        <button type="button" onclick="closeNewCard(event)">Cancel</button>
-                        <button type="submit">Create</button>
+                    <div class="cardPosCenter">
+                        <label for="front">Question</label>
+                        <input type="text" id="front"  name="front" placeholder="Front Text" required>
+                        <label for="back">Answer</label>
+                        <textarea id="back" name="back" placeholder="Back Text" required></textarea>
+                        <label for="color">Color</label>
+                        <input type="color" id="color" name="color" value="#ffffff">
+                        <div class="button-box">
+                            <button type="button" onclick="closeNewCard(event)" class="btn-cancel">Cancel</button>
+                            <button type="submit" class="btn-confirm">Create</button>
+                        </div>
                     </div>
                 </form>
-
             </div>
-        </div>
-    `;
+        </div>`;
 }
 
 function deletArea(i) {

@@ -2,7 +2,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
 .loginArea {
     display: flex;
     flex-direction: column;
@@ -125,7 +134,7 @@ input {
 .sign-in {
     font-size: clamp(1.5rem, 2vw, 3rem); 
     margin-bottom: 2rem;
-    margin-left: 4.5rem;
+    margin-left: 3.4rem;
 }
 .sign-up {
     font-size: clamp(1.5rem, 2vw, 3rem); 
@@ -201,7 +210,11 @@ input {
     margin-top: 16px;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
+
+    .auth-form{ 
+        margin-left: 0; 
+    } 
     .login-container {
         flex-direction: column;
         width: 70%; 
@@ -254,4 +267,4 @@ input {
     .login-container {
         justify-content: space-between; 
     }
-}
+} */
