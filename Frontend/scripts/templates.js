@@ -1,5 +1,5 @@
 function loadLogin() {
-  return /*html*/ `
+    return /*html*/ `
     <div class="authScreen">
         <div class="loginArea">
             <span>Wellcome Back </span>
@@ -16,7 +16,7 @@ function loadLogin() {
 }
 
 function loadRegister() {
-  return /*html*/ `
+    return /*html*/ `
     <div class="authScreen">
         <div class="register" onload="clearValues()">
             <img onclick="loadLoginContent()" src="/img/arrow_left.png" alt="arrow left">
@@ -33,7 +33,7 @@ function loadRegister() {
 }
 
 function loadDashboard(channelName) {
-  return /*html*/ `
+    return /*html*/ `
     <div id="app">
         <div id="sidebar">
             <h2>Sprachen</h2>
@@ -82,13 +82,13 @@ function loadDashboard(channelName) {
 }
 
 function headerLanguage(channel) {
-return /*html*/`
+    return /*html*/`
     <h2 id="current-language">${channel.title}</h2>
     <button id="add-card" onclick="addNewCard('')">Neuer Lernzettel</button>`;
-    
+
 }
 
-function loadLanguage(channel,i) {    
+function loadLanguage(channel, i) {
     return `
         <div class="language" data-language="${channel.title}" onclick="switchLanguage(${i})" 
         ondblclick="deleteChannelOpen(${i})">${channel.title}</div>`;
@@ -103,7 +103,7 @@ function inputChannel() {
 }
 
 
-function newCardHTML(){
+function newCardHTML() {
     return /*html*/`
         <div class="container-backgroound" ">
             <div id="cardBoxArea" class="card-style">
@@ -139,9 +139,9 @@ function deletArea(i) {
 
 }
 
-function loadCard(card,i) {
+function loadCard(card, i) {
     return /*html*/`
-        <div id="movable${i}"  onclick="flipAction(${i})" class="card" style="background-color: ${card.color};
+        <div id="movable${i}" onclick="flipAction(${i})"  class="card" style="background-color: ${card.color};
         left: ${card.posX}%; 
         top: ${card.posY}%;">
         <div id="cardContent${i}" class="card-content">
@@ -151,23 +151,23 @@ function loadCard(card,i) {
         
         </div>
         `;
-    
+
 }
 
 
 
 
-function loadFlipCard(card,i) {
+function loadFlipCard(card, i) {
     return /*html*/`
-        <div id="cardContent${i}" class="card-content" onclick="flipAction(${i})">
+        <div id="cardContent${i}" class="card-content" >
             <span>${card.answer}</span>
             <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
         </div>`;
 }
 
-function loadFlipEnd(card,i) {
+function loadFlipEnd(card, i) {
     return /*html*/`
-        <div id="cardContent${i+1}" class="card-content" onclick="flipAction(${i})">
+        <div id="cardContent${i}" class="card-content" >
             <span>${card.question}</span>
             <button id="deleteCardBtn" class="btn-delete"  onclick="deleteCard( ${i})">Delete</button>
         </div>`;

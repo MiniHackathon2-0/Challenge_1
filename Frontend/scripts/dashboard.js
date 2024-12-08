@@ -77,7 +77,13 @@ function loadCardsArray(result) {
 
     for (let i = 0; i < result.length; i++) {
         const element = result[i];
-        const newElement = {...element, "isFlipped": false};
+        const newElement = {
+            ...element,
+            "isFlipped": false,
+            "movedX": element.posX,
+            "movedY": element.posY,
+            "isMoved": false
+        };
         cards.push(newElement);
     }
 }
@@ -266,18 +272,28 @@ function moveCard(e, cardElement, offsetX, offsetY, parentElement, i) {
     yPercent = Math.max(0, Math.min(yPercent, maxY));
     cardElement.style.left = `${xPercent}%`;
     cardElement.style.top = `${yPercent}%`;
-    cards[i].posX = xPercent;
-    cards[i].posY = yPercent;
+    cards[i].movedX = xPercent;
+    cards[i].movedY = yPercent;
 }
 
 
-function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, id, posX, posY) {
+function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, card) {
     cardElement.style.cursor = "grab";
     document.removeEventListener("mousemove", mouseMoveHandler);
     document.removeEventListener("mouseup", mouseUpHandler);
-    console.log("Card moved:", id, posX, posY);
-    updateCardPosition(id, posX, posY);
+    console.log("Card moved:", card.id, card.posX, card.posY);
 
+    if (
+        (card.movedX !== card.posX) ||
+        (card.movedY !== card.posY)
+    ) {
+        card.isMoved = true;
+        card.posX = card.movedX;
+        card.posY = card.movedY;
+        updateCardPosition(card._id, card.posX, card.posY);
+    } else {
+        card.isMoved = false;
+    }
 }
 
 
@@ -291,7 +307,7 @@ function makeMovable(cardElement, i) {
         cardElement.style.cursor = "grabbing";
         const parentElement = cardElement.parentElement;
         const mouseMoveHandler = (e) => moveCard(e, cardElement, offsetX, offsetY, parentElement, i);
-        const mouseUpHandler = () => stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, cards[i]._id, cards[i].posX, cards[i].posY);
+        const mouseUpHandler = () => stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, cards[i]);
         document.addEventListener("mousemove", mouseMoveHandler);
         document.addEventListener("mouseup", mouseUpHandler);
     });
@@ -335,54 +351,52 @@ function loadBakcgroundColorAndName() {
 }
 
 function flipAction(i) {
-    if (cards[i].isFlipping) return;
-    cards[i].isFlipping = true;
-    let cardElement = cards[i].isFlipped;
+
+    if (cards[i].isMoved) return;
+
 
     if (!cards[i].isFlipped) {
         console.log('start:', cards[i].isFlipped);
         stopDeletAreaCard();
         flipCard(i);
-        cards[i].isFlipped = !cardElement;
         console.log('end:', cards[i].isFlipped);
     } else {
         console.log('start:', cards[i].isFlipped);
         stopDeletAreaCard();
         flipEnd(i);
-        cards[i].isFlipped = !cardElement;
         console.log('end:', cards[i].isFlipped);
     }
 
-    setTimeout(() => {
-        cards[i].isFlipping = false;
-    }, 800);
+    cards[i].isFlipped = !cards[i].isFlipped;
 }
 
 function flipCard(i) {
-    let cardElement = document.getElementById('movable'+ i);       
-    cardElement.classList.add('flip'); 
+    let cardElement = document.getElementById('movable' + i);
+    cardElement.classList.remove('flip-reverse');
+    cardElement.classList.add('flip');
     cardElement.innerHTML = '';
     flipStart(i);
 }
 
 function flipStart(i) {
     const card = cards[i];
-    let cardElement = document.getElementById('movable'+ i);
+    let cardElement = document.getElementById('movable' + i);
     cardElement.innerHTML = loadFlipCard(card, i);
-    let cardText = document.getElementById('cardContent'+ i);    
+    let cardText = document.getElementById('cardContent' + i);
     cardText.classList.add('flip-back');
 }
 
 function flipEnd(i) {
-    let cardElement = document.getElementById('movable'+ i);
-    let cardText = document.getElementById('cardContent'+ i); 
-    cardText.innerHTML='';
-    cardElement.classList.add('flip-reverse'); 
-    cardElement.classList.remove('flip'); 
-    flipEndToStart(i);
+    let cardElement = document.getElementById('movable' + i);
+    cardElement.innerHTML = '';
+    cardElement.classList.remove('flip');
+    cardElement.classList.add('flip-reverse');
+    cardElement.innerHTML = flipEndToStart(i);
+    let cardText = document.getElementById('cardContent' + i);
+    cardText.classList.remove('flip-back');
 }
 
 function flipEndToStart(i) {
     const card = cards[i];
-    loadFlipEnd(card,i);
+    return loadFlipEnd(card, i);
 }
