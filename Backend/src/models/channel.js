@@ -7,7 +7,7 @@ const channelSchema = new mongoose.Schema({
         type: String,
         required: true,
         min: 3,
-        max: 40,
+        max: 20,
     },
     creator: {
         type: String,
@@ -20,7 +20,7 @@ const channelSchema = new mongoose.Schema({
 
 function validateChannel(user) {
     const schema = Joi.object({
-        title: Joi.string().min(3).max(40).required(),
+        title: Joi.string().min(3).max(20).required(),
         creator: Joi.string().required(),
     })
     return schema.validate(user)

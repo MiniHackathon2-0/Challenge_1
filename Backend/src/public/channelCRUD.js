@@ -64,7 +64,7 @@ async function deleteChannel(req, res) {
         }
 
         if (req.user.id !== channel.creator) {
-            return res.status(400).send({ error: 'You are not the creator of this channel' });
+            return res.status(400).send({message: 'You are not the creator of this channel'});
         }
 
         await Card.deleteMany({ category: channel.title });
