@@ -210,6 +210,10 @@ input {
     margin-top: 16px;
 }
 
+.padding16pxLR{
+    padding: 0 16px;
+}
+
 /* @media (max-width: 768px) {
 
     .auth-form{ 

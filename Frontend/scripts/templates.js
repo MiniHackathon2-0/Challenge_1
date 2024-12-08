@@ -125,8 +125,15 @@ function loadLanguage(channel, i) {
 function inputChannel() {
     return `
     <div id="input-channel" class="input-new-channel d_none"><span>New Channel</span>
-        <input id="newInput" type="text">
-        <div ><button id="save-channel" onclick="saveChannel()">Save</button> <button id="cancel-channel" onclick="cancelChannel()">Cancel</button></div>
+        <div class="input-new-channel-box">
+            <input id="newInput" type="text">
+            <span id="error-channel" class="error-span">Channel already exists</span>
+            <span id="invalide-channel-name" class="error-span">Channelname is too short/long</span>
+        </div>
+        <div class="button-box padding16pxLR">
+            <button id="cancel-channel" onclick="cancelChannel()" class="btn-cancel">Cancel</button>
+            <button id="save-channel" onclick="saveChannel()" class="btn-confirm">Create</button> 
+        </div>
     </div>`;
 }
 
@@ -142,7 +149,7 @@ function newCardHTML() {
                         <label for="back">Answer</label>
                         <textarea id="back" name="back" placeholder="Back Text" required></textarea>
                         <label for="color">Color</label>
-                        <input type="color" id="color" name="color" value="#ffffff">
+                        <input type="color" id="color" name="color" value="#111214">
                         <div class="button-box">
                             <button type="button" onclick="closeNewCard(event)" class="btn-cancel">Cancel</button>
                             <button type="submit" class="btn-confirm">Create</button>
