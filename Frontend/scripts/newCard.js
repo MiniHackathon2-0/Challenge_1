@@ -10,6 +10,12 @@ function closeNewCard(event) {
     // event.stopPropagation();
     let cardBox = document.getElementById("cardBox");
     cardBox.classList.add("d_none");
+    const QUESTION = document.getElementById("front").value;
+    const ANSWER = document.getElementById("back").value;
+    const COLOR = document.getElementById("color").value;
+    QUESTION = '';
+    ANSWER = '';
+    COLOR = '';
 }
 
 function stopCardArea() {
