@@ -371,6 +371,7 @@
   margin-top: 10px;
   margin-left: 10px;
   color: whitesmoke;
+  word-break: break-word;
 }
 
 .flip {
