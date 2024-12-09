@@ -275,13 +275,27 @@ function getMaxCoordinates(cardElement, parentElement) {
     return { maxX, maxY };
 }
 
-function moveCard(e, cardElement, offsetX, offsetY, parentElement, i) {
+function moveCard(e, cardElement, offsetX, offsetY, parentElement, i, isTouch = false) {
     const parentRect = parentElement.getBoundingClientRect();
-    let xPercent = ((e.clientX - parentRect.left - offsetX) / parentRect.width) * 100;
-    let yPercent = ((e.clientY - parentRect.top - offsetY) / parentRect.height) * 100;
+    const { width, height } = parentRect;
+    let touchX, touchY;
+
+    if (isTouch) {
+        const touch = e.touches[0];
+        touchX = Math.max(0, Math.min(touch.clientX - parentRect.left, width));
+        touchY = Math.max(0, Math.min(touch.clientY - parentRect.top, height));
+    } else {
+        touchX = Math.max(0, Math.min(e.clientX - parentRect.left, width));
+        touchY = Math.max(0, Math.min(e.clientY - parentRect.top, height));
+    }
+
+    let xPercent = ((touchX - offsetX) / width) * 100;
+    let yPercent = ((touchY - offsetY) / height) * 100;
+
     const { maxX, maxY } = getMaxCoordinates(cardElement, parentElement);
     xPercent = Math.max(0, Math.min(xPercent, maxX));
     yPercent = Math.max(0, Math.min(yPercent, maxY));
+
     cardElement.style.left = `${xPercent}%`;
     cardElement.style.top = `${yPercent}%`;
     cards[i].movedX = xPercent;
@@ -289,10 +303,16 @@ function moveCard(e, cardElement, offsetX, offsetY, parentElement, i) {
 }
 
 
-function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, card) {
+
+function stopDragging(cardElement, moveHandler, upHandler, card, isTouch = false) {
     cardElement.style.cursor = "grab";
-    document.removeEventListener("mousemove", mouseMoveHandler);
-    document.removeEventListener("mouseup", mouseUpHandler);
+    if (isTouch) {
+        document.removeEventListener("touchmove", moveHandler);
+        document.removeEventListener("touchend", upHandler);
+    } else {
+        document.removeEventListener("mousemove", moveHandler);
+        document.removeEventListener("mouseup", upHandler);
+    }
 
     if (
         (card.movedX !== card.posX) ||
@@ -309,10 +329,9 @@ function stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, card) {
 
 
 function makeMovable(cardElement, i) {
-    let isDragging = false;
-    let offsetX = 0, offsetY = 0;
+
     cardElement.addEventListener("mousedown", (e) => {
-        isDragging = true;
+        let offsetX = 0, offsetY = 0;
         offsetX = e.offsetX;
         offsetY = e.offsetY;
         updateCardZIndex(i);
@@ -322,6 +341,22 @@ function makeMovable(cardElement, i) {
         const mouseUpHandler = () => stopDragging(cardElement, mouseMoveHandler, mouseUpHandler, cards[i]);
         document.addEventListener("mousemove", mouseMoveHandler);
         document.addEventListener("mouseup", mouseUpHandler);
+    });
+    cardElement.addEventListener("touchstart", (e) => {
+        let offsetX = 0, offsetY = 0;
+        const rect = cardElement.getBoundingClientRect();
+        const touch = e.touches[0]; // Nimmt den ersten Touch-Punkt
+        // offsetX = touch.clientX;
+        // offsetY = touch.clientY;
+        offsetX = touch.clientX - rect.left;
+        offsetY = touch.clientY - rect.top;
+        updateCardZIndex(i);
+        cardElement.style.cursor = "grabbing";
+        const parentElement = cardElement.parentElement;
+        const touchMoveHandler = (e) => moveCard(e, cardElement, offsetX, offsetY, parentElement, i, true);
+        const touchUpHandler = () => stopDragging(cardElement, touchMoveHandler, touchUpHandler, cards[i], true);
+        document.addEventListener("touchmove", touchMoveHandler, { passive: false }); // Standardverhalten verhindern
+        document.addEventListener("touchend", touchUpHandler);
     });
 }
 
@@ -364,7 +399,7 @@ function flipAction(i) {
 
     if (cards[i].isMoved) return;
     updateCardZIndex(i);
-    
+
     if (!cards[i].isFlipped) {
         flipCard(i);
     } else {
@@ -421,13 +456,13 @@ function updateCardZIndex(i) {
         if (prevCardElement == null) {
             return;
         }
-        prevCardElement.style.zIndex = ''; 
-        cards[activeCardIndex].currentZIndex = 1; 
+        prevCardElement.style.zIndex = '';
+        cards[activeCardIndex].currentZIndex = 1;
     }
 
     const currentCardElement = document.getElementById('movable' + i);
     currentCardElement.style.zIndex = '1000';
-    cards[i].currentZIndex = 1000; 
+    cards[i].currentZIndex = 1000;
 
     activeCardIndex = i;
 }
